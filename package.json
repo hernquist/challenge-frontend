@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "local": "env NEXT_PUBLIC_BACKEND_URL=http://localhost:3001/graphql next dev -p 3333",
     "dev": "next dev -p 3333",
     "build": "next build",
     "start": "next start"
@@ -14,7 +15,7 @@
     "isomorphic-unfetch": "^3.0.0",
     "lodash": "^4.17.19",
     "mathjs": "^7.0.1",
-    "next": "9.3.5",
+    "next": "9.5.2",
     "prop-types": "^15.7.2",
     "react": "16.13.1",
     "react-chartjs": "^1.2.0",

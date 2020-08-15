@@ -2,7 +2,8 @@ import { GraphQLClient } from "graphql-request";
 import { CHALLENGE_TOKEN } from "../constant";
 
 const useQuery = async (query, variables) => {
-  const endpoint = "http://localhost:3001/graphql";
+  const endpoint = process.env.NEXT_PUBLIC_BACKEND_URL;
+  console.log("endpoint", endpoint);
 
   let localToken;
 
