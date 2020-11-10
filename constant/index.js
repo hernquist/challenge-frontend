@@ -11,6 +11,7 @@ export const ONE = [1];
 export const TWO = [1, 2];
 export const THREE = [1, 2, 3];
 export const FOUR = [1, 2, 3, 4];
+export const FIVE = [1, 2, 3, 4, 5];
 
 export const PRACTICE = "PRACTICE";
 export const ASSESS = "ASSESS";
