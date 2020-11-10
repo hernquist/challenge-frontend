@@ -7,41 +7,45 @@ import handleQuery from "../../request/handleMutation";
 import { FETCH_MODULE } from "../../gql/queries";
 import { removeAssessmentFromRoute } from "../../lib/remove-assessment-from-route";
 import isEmpty from "lodash/isEmpty";
+import { readRoute } from "../../lib/read-route";
 
 const InequalitiesContainer = () => {
-  const { route } = useRouter();
+  const router = useRouter();
+  const { asPath } = router;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
   const [moduleData, setModule] = useState({});
 
-  const truncatedRoute = removeAssessmentFromRoute(route);
+  const truncatedRoute = removeAssessmentFromRoute(asPath);
 
   const savePracticeHandler = async (variables) => {
     await handleMutation(SAVE_PRACTICE, variables, setLoading, setError);
   };
 
   useEffect(() => {
-    const getModule = async (route) => {
+    const getModule = async (slug) => {
       const { module } = await handleQuery(
         FETCH_MODULE,
-        { slug: route },
+        { slug },
         setLoading,
         setError
       );
       setModule(module);
     };
 
-    getModule(truncatedRoute);
+    const { level } = readRoute(truncatedRoute);
+    if (!level.includes("[")) {
+      getModule(truncatedRoute);
+    }
 
     return setModule({});
-  }, []);
+  }, [truncatedRoute]);
 
   if (isEmpty(moduleData)) return null;
 
   return (
     <Inequalities
-      numberOfTurns={7}
-      route={route}
+      route={asPath}
       loading={loading}
       error={error}
       clearError={() => setError({})}

@@ -12,6 +12,7 @@ import {
   FOUR,
   PRACTICE_ONLY,
   EVERY,
+  FIVE,
 } from "../../constant";
 import { Table, Tr, Th, Td, Thead, Tbody, A } from "./styles";
 
@@ -19,9 +20,9 @@ const choices = [
   {
     topic: FRACTIONS,
     engagement: [COMPARE, ORDER],
-    level: [FOUR, TWO],
+    level: [FIVE, TWO],
     assessment: [
-      [EVERY, EVERY, EVERY, EVERY],
+      [EVERY, EVERY, EVERY, EVERY, EVERY],
       [EVERY, PRACTICE_ONLY],
     ],
   },

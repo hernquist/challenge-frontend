@@ -20,6 +20,7 @@ const USER = `query User {
 const FETCH_MODULE = `query GetModule ($slug: String!) {
     module(slug: $slug) {
       numberOfTurns
+      slug
       content {
         list
         name
