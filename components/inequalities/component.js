@@ -27,7 +27,7 @@ const Inequalities = ({
   savePracticeHandler,
 }) => {
   const [order, setOrder] = useState(getRandomInt(2));
-  const fractions = get(module, "fractions");
+  const fractions = get(module, "content");
   const numberOfTurns = get(module, "numberOfTurns", 5);
 
   const getFraction = (side) => {

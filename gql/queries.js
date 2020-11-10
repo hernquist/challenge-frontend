@@ -20,9 +20,11 @@ const USER = `query User {
 const FETCH_MODULE = `query GetModule ($slug: String!) {
     module(slug: $slug) {
       numberOfTurns
-      fractions {
+      content {
         list
         name
+        type
+        _id
       }
     }
   }
