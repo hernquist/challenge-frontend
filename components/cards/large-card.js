@@ -1,6 +1,6 @@
 import { LargeCardContainer, Numerator, Denominator } from "./styles";
 import { getNumerator, getDenominator } from "../../lib/get-numerator";
-import { FRACTIONS, DECIMALS } from "../../constant";
+import { FRACTIONS } from "../../constant";
 
 const LargeCard = ({ topic, content }) => {
   if (topic === FRACTIONS) {

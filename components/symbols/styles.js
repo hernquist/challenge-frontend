@@ -7,14 +7,11 @@ export const LargeSymbolCard = styled.div`
   background: ${({ theme }) => theme.color.orange};
   font-size: 6rem;
   padding: 0 0 1rem;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   cursor: pointer;
-
   border-radius: 1rem;
   color: ${({ theme }) => theme.color.offBlack};
   border: 4px solid white;
