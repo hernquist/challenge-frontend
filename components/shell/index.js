@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import Head from "next/head";
-import { Main } from "./styles";
+import { Main, Body } from "./styles";
 import Header from "../header";
 import ThemeProvider from "../../styles/theme-provider";
 import { useStoreState } from "easy-peasy";
@@ -23,17 +23,19 @@ const Shell = ({ children }) => {
   console.log("isAuthenticed", isAuthenticated);
 
   return (
-    <div style={{ height: "100vh" }}>
+    <>
       <Head>
         <title>Challenge</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <ThemeProvider>
-        <Header user={user} isAuthenticated={isAuthenticated} />
-        <Main>{children}</Main>
+        <Body>
+          <Header user={user} isAuthenticated={isAuthenticated} />
+          <Main>{children}</Main>
+        </Body>
       </ThemeProvider>
-    </div>
+    </>
   );
 };
 

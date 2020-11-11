@@ -1,19 +1,25 @@
 import styled from "styled-components";
 
 export const Container = styled.header`
-  width: 100%;
-  z-index: 10;
-  height: 2.4rem;
-
-  border-bottom: 2px solid ${({ theme }) => theme.color.offBlack};
-
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
-
+  width: 100%;
+  z-index: 10;
+  border-bottom: 2px solid ${({ theme }) => theme.color.offBlack};
   font-family: ${({ theme }) => theme.font.regular};
   background-color: ${({ theme }) => theme.color.atol};
+  padding: 0 0 0.2rem;
+
+  ${({ theme }) => theme.mediaQuery.tablet} {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 2.4rem;
+    padding: 0;
+  }
 `;
 
 export const Title = styled.h2`
@@ -30,7 +36,17 @@ export const A = styled.a`
   margin: 0 1rem;
   cursor: pointer;
 
-  :hover {
-    text-decoration: underline;
+  ${({ theme }) => theme.mediaQuery.tablet} {
+    :hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
+export const Email = styled.div`
+  display: none;
+
+  ${({ theme }) => theme.mediaQuery.tablet} {
+    display: block;
   }
 `;
