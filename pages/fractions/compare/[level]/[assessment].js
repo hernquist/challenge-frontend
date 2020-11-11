@@ -1,7 +1,7 @@
 import Shell from "../../../../components/shell";
 import Inequalities from "../../../../components/inequalities";
 
-export default function InequalitiesAssess() {
+export default function FractionsAssessment() {
   return (
     <Shell>
       <Inequalities />

@@ -1,8 +1,8 @@
 export const CHALLENGE_TOKEN = "challenge-token";
 
-export const FRACTIONS = "FRACTIONS";
-export const DECIMALS = "DECIMALS";
-export const MIXED_NUMBERS = "MIXED NUMBERS";
+export const FRACTIONS = "fractions";
+export const DECIMALS = "decimals";
+export const MIXED_NUMBERS = "mixed numbers";
 
 export const COMPARE = "COMPARE";
 export const ORDER = "ORDER";

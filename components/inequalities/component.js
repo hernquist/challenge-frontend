@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { number, arrayOf, string } from "prop-types";
-import { create, all } from "mathjs";
+import { number, arrayOf, string, shape, bool, func, object } from "prop-types";
 import { determineInequality } from "../../lib/determine-inequality";
 import { getRandomInt } from "../../lib/get-random-int";
-import LargeFractionCard from "../fraction-cards/large-fraction-card";
+import LargeCard from "../cards/large-card";
 import {
-  InequalityContainer,
+  ContentContainer,
   InequalityCards,
   LargeSymbolCardsContainer,
   LargeSymbolCard,
@@ -15,8 +14,8 @@ import Recap from "../recap";
 import Error from "../error";
 import { LEFT, RIGHT } from "../../constant";
 import get from "lodash/get";
-
-const math = create(all, {});
+import { getNumber } from "./utils";
+import noop from "lodash/noop";
 
 const Inequalities = ({
   module,
@@ -26,70 +25,75 @@ const Inequalities = ({
   clearError,
   savePracticeHandler,
 }) => {
+  // state
   const [order, setOrder] = useState(getRandomInt(2));
-  const fractions = get(module, "content");
+  const content = get(module, "content");
   const numberOfTurns = get(module, "numberOfTurns", 5);
+  const { topic, engagement, level, assessment } = readRoute(route);
 
-  const getFraction = (side) => {
+  const getContent = (side) => {
     const index =
       (side === LEFT && !!order) || (side === RIGHT && !order) ? 0 : 1;
-    return fractions[index].list[getRandomInt(fractions[index].list.length)];
+    return content[index].list[getRandomInt(content[index].list.length)];
   };
 
-  const [leftFraction, setLeftFraction] = useState(getFraction(LEFT));
-  const [rightFraction, setRightFraction] = useState(getFraction(RIGHT));
+  const [leftContent, setLeftContent] = useState(getContent(LEFT));
+  const [rightContent, setRightContent] = useState(getContent(RIGHT));
   const [gameHistory, updateGameHistory] = useState([]);
-
-  const setNewFractions = () => {
-    setLeftFraction(getFraction(LEFT));
-    setRightFraction(getFraction(RIGHT));
-  };
-
   const [numberOfAttempts, setNumberOfAttempts] = useState(0);
   const [numberOfCorrect, setNumberOfCorrect] = useState(0);
 
+  const setNewFractions = () => {
+    setLeftContent(getContent(LEFT));
+    setRightContent(getContent(RIGHT));
+  };
+
+  const reset = () => {
+    setNumberOfAttempts(0);
+    setNumberOfCorrect(0);
+    updateGameHistory([]);
+  };
+
+  // updates
   useEffect(() => {
     setNewFractions();
   }, [numberOfAttempts]);
 
   useEffect(() => {
-    if (leftFraction === rightFraction) {
-      setLeftFraction(getFraction(LEFT));
-      setRightFraction(getFraction(RIGHT));
+    if (leftContent === rightContent) {
+      setLeftContent(getContent(LEFT));
+      setRightContent(getContent(RIGHT));
     }
   });
 
   const roundOver = numberOfTurns <= numberOfAttempts;
 
-  const { topic, engagement, level } = readRoute(route);
-
   useEffect(() => {
     if (roundOver) {
       savePracticeHandler({
-        variables: {
-          practice: {
-            completedOn: new Date(),
-            topic,
-            engagement,
-            level: Number(level),
-            totalQuestion: numberOfAttempts,
-            totalCorrect: numberOfCorrect,
-            score: numberOfCorrect / numberOfAttempts,
-          },
+        practice: {
+          completedOn: new Date(),
+          topic,
+          engagement,
+          level: Number(level),
+          totalQuestion: numberOfAttempts,
+          totalCorrect: numberOfCorrect,
+          score: numberOfCorrect / numberOfAttempts,
+          assessmentType: assessment,
         },
       });
     }
   }, [roundOver]);
 
   const checkAnswer = (equality) => {
-    const firstNumber = math.number(math.fraction(leftFraction));
-    const secondNumber = math.number(math.fraction(rightFraction));
+    const firstNumber = getNumber(topic, leftContent);
+    const secondNumber = getNumber(topic, rightContent);
 
     const correct = determineInequality(equality, firstNumber, secondNumber);
     const round = {
-      leftFraction,
+      leftContent,
       equality,
-      rightFraction,
+      rightContent,
       correct,
       numberOfAttempts: numberOfAttempts + 1,
       numberOfCorrect: numberOfCorrect + correct,
@@ -113,18 +117,17 @@ const Inequalities = ({
   }
 
   return roundOver ? (
-    <>
-      <Recap
-        gameHistory={gameHistory}
-        numberOfCorrect={numberOfCorrect}
-        numberOfAttempts={numberOfAttempts}
-      />
-    </>
+    <Recap
+      gameHistory={gameHistory}
+      numberOfCorrect={numberOfCorrect}
+      numberOfAttempts={numberOfAttempts}
+      reset={reset}
+    />
   ) : (
-    <InequalityContainer>
+    <ContentContainer>
       {loading && <h1>Loading...</h1>}
       <InequalityCards>
-        <LargeFractionCard fraction={leftFraction} />
+        <LargeCard content={leftContent} topic={topic} />
         <LargeSymbolCardsContainer>
           <LargeSymbolCard
             onClick={() => checkAnswer("lessThan")}
@@ -136,14 +139,35 @@ const Inequalities = ({
             =
           </LargeSymbolCard>
         </LargeSymbolCardsContainer>
-        <LargeFractionCard fraction={rightFraction} />
+        <LargeCard content={rightContent} topic={topic} />
       </InequalityCards>
-    </InequalityContainer>
+    </ContentContainer>
   );
 };
 
-Inequalities.propTypes = {};
+Inequalities.propTypes = {
+  module: shape({
+    numberOfTurns: number,
+    slug: string.isRequired,
+    content: arrayOf(
+      shape({
+        _id: string.isRequired,
+        name: string.isRequired,
+        type: string.isRequired,
+        list: arrayOf(string),
+      })
+    ),
+  }),
+  route: string.isRequired,
+  error: object,
+  loading: bool,
+  clearError: func,
+  savePracticeHandler: func,
+};
 
-Inequalities.defaultProps = {};
+Inequalities.defaultProps = {
+  clearError: noop,
+  savePracticeHandler: noop,
+};
 
 export default Inequalities;
