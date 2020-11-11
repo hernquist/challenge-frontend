@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { number, arrayOf, string } from "prop-types";
+import { number, arrayOf, string, shape, bool, func, object } from "prop-types";
 import { determineInequality } from "../../lib/determine-inequality";
 import { getRandomInt } from "../../lib/get-random-int";
 import LargeCard from "../cards/large-card";
@@ -15,6 +15,7 @@ import Error from "../error";
 import { LEFT, RIGHT } from "../../constant";
 import get from "lodash/get";
 import { getNumber } from "./utils";
+import noop from "lodash/noop";
 
 const Inequalities = ({
   module,
@@ -138,8 +139,29 @@ const Inequalities = ({
   );
 };
 
-Inequalities.propTypes = {};
+Inequalities.propTypes = {
+  module: shape({
+    numberOfTurns: number,
+    slug: string.isRequired,
+    content: arrayOf(
+      shape({
+        _id: string.isRequired,
+        name: string.isRequired,
+        type: string.isRequired,
+        list: arrayOf(string),
+      })
+    ),
+  }),
+  route: string.isRequired,
+  error: object,
+  loading: bool,
+  clearError: func,
+  savePracticeHandler: func,
+};
 
-Inequalities.defaultProps = {};
+Inequalities.defaultProps = {
+  clearError: noop,
+  savePracticeHandler: noop,
+};
 
 export default Inequalities;
