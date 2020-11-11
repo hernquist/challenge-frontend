@@ -10,7 +10,7 @@ import {
   Title,
   RecapList,
 } from "./styles";
-import { Numerator, Denominator } from "../fraction-cards/styles";
+import { Numerator, Denominator } from "../cards/styles";
 import { getNumerator, getDenominator } from "../../lib/get-numerator";
 import styles from "../../styles/theme";
 

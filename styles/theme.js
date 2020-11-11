@@ -41,6 +41,9 @@ const styles = {
     white: "#fff",
     offBlack: "#262626",
   },
+  boxShadow: {
+    primaryCard: "0.2rem 0.2rem #888888",
+  },
 };
 
 export default styles;

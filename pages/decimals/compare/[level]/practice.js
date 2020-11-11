@@ -1,10 +1,10 @@
 import Shell from "../../../../components/shell";
-import Decimals from "../../../../components/decimals";
+import Inequalities from "../../../../components/inequalities";
 
 export default function DecimalsPractice() {
   return (
     <Shell>
-      <Decimals />
+      <Inequalities />
     </Shell>
   );
 }
