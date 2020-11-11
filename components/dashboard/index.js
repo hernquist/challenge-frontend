@@ -43,12 +43,13 @@ const choices = [
     level: [TWO],
     assessment: [[EVERY, EVERY]],
   },
-  {
-    topic: MIXED_NUMBERS,
-    engagement: [COMPARE],
-    level: [THREE],
-    assessment: [[PRACTICE_ONLY, PRACTICE_ONLY, EVERY]],
-  },
+  // {
+  //   topic: MIXED_NUMBERS,
+  //   engagement: [COMPARE],
+  //   level: [THREE],
+  //   assessment: [[PRACTICE_ONLY, PRACTICE_ONLY, EVERY]],
+  // },
+  {},
   {},
 ];
 
