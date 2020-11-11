@@ -79,7 +79,7 @@ const Inequalities = ({
           totalQuestion: numberOfAttempts,
           totalCorrect: numberOfCorrect,
           score: numberOfCorrect / numberOfAttempts,
-          // gameHistory,
+          assessmentType: assessment,
         },
       });
     }

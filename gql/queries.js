@@ -12,6 +12,7 @@ const USER = `query User {
         totalQuestion
         totalCorrect
         score
+        assessmentType
       }
     }
   }
