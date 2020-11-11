@@ -63,16 +63,14 @@ const Decimals = ({
   useEffect(() => {
     if (roundOver) {
       savePracticeHandler({
-        variables: {
-          practice: {
-            completedOn: new Date(),
-            topic,
-            engagement,
-            level: Number(level),
-            totalQuestion: numberOfAttempts,
-            totalCorrect: numberOfCorrect,
-            score: numberOfCorrect / numberOfAttempts,
-          },
+        practice: {
+          completedOn: new Date(),
+          topic,
+          engagement,
+          level: Number(level),
+          totalQuestion: numberOfAttempts,
+          totalCorrect: numberOfCorrect,
+          score: numberOfCorrect / numberOfAttempts,
         },
       });
     }
@@ -91,8 +89,6 @@ const Decimals = ({
       numberOfAttempts: numberOfAttempts + 1,
       numberOfCorrect: numberOfCorrect + correct,
     };
-
-    console.log(correct);
 
     updateGameHistory([...gameHistory, round]);
     setNumberOfAttempts(numberOfAttempts + 1);

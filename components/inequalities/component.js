@@ -67,18 +67,15 @@ const Inequalities = ({
   useEffect(() => {
     if (roundOver) {
       savePracticeHandler({
-        variables: {
-          practice: {
-            completedOn: new Date(),
-            topic,
-            engagement,
-            level: Number(level),
-            totalQuestion: numberOfAttempts,
-            totalCorrect: numberOfCorrect,
-            score: numberOfCorrect / numberOfAttempts,
-            gameHistory,
-            xw,
-          },
+        practice: {
+          completedOn: new Date(),
+          topic,
+          engagement,
+          level: Number(level),
+          totalQuestion: numberOfAttempts,
+          totalCorrect: numberOfCorrect,
+          score: numberOfCorrect / numberOfAttempts,
+          // gameHistory,
         },
       });
     }
