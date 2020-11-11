@@ -5,7 +5,7 @@ import { determineInequality } from "../../lib/determine-inequality";
 import { getRandomInt } from "../../lib/get-random-int";
 import LargeFractionCard from "../fraction-cards/large-fraction-card";
 import {
-  InequalityContainer,
+  ContentContainer,
   InequalityCards,
   LargeSymbolCardsContainer,
   LargeSymbolCard,
@@ -63,6 +63,7 @@ const Inequalities = ({
 
   const { topic, engagement, level } = readRoute(route);
 
+  // TODO: make practice and test the same
   useEffect(() => {
     if (roundOver) {
       savePracticeHandler({
@@ -75,6 +76,8 @@ const Inequalities = ({
             totalQuestion: numberOfAttempts,
             totalCorrect: numberOfCorrect,
             score: numberOfCorrect / numberOfAttempts,
+            gameHistory,
+            xw,
           },
         },
       });
@@ -87,9 +90,9 @@ const Inequalities = ({
 
     const correct = determineInequality(equality, firstNumber, secondNumber);
     const round = {
-      leftFraction,
+      leftContent: leftFraction,
       equality,
-      rightFraction,
+      rightContent: rightFraction,
       correct,
       numberOfAttempts: numberOfAttempts + 1,
       numberOfCorrect: numberOfCorrect + correct,
@@ -121,7 +124,7 @@ const Inequalities = ({
       />
     </>
   ) : (
-    <InequalityContainer>
+    <ContentContainer>
       {loading && <h1>Loading...</h1>}
       <InequalityCards>
         <LargeFractionCard fraction={leftFraction} />
@@ -138,7 +141,7 @@ const Inequalities = ({
         </LargeSymbolCardsContainer>
         <LargeFractionCard fraction={rightFraction} />
       </InequalityCards>
-    </InequalityContainer>
+    </ContentContainer>
   );
 };
 

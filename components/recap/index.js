@@ -8,6 +8,7 @@ import {
   ReviewATag as A,
   TitleContainer,
   Title,
+  RecapList,
 } from "./styles";
 import { Numerator, Denominator } from "../fraction-cards/styles";
 import { getNumerator, getDenominator } from "../../lib/get-numerator";
@@ -49,16 +50,18 @@ const Recap = ({ numberOfCorrect, numberOfAttempts, gameHistory = [] }) => {
         <Score>{(decimalScore.toFixed(2) * 100).toFixed(0)}%</Score>
         <Pie data={pieData} width="100" height="100" />
       </Scores>
-      {gameHistory.map((round, i) => (
-        <Question key={i} correct={round.correct}>
-          {round.leftFraction}
-          {` `}
-          {round.equality.replace(/([A-Z])/g, " $1").toLowerCase()}
-          {` `}
-          {round.rightFraction}
-          {round.correct ? <span> &#10003;</span> : <span> &#10007;</span>}
-        </Question>
-      ))}
+      <RecapList>
+        {gameHistory.map((round, i) => (
+          <Question key={i} correct={round.correct}>
+            {round.leftContent}
+            {` `}is{` `}
+            {round.equality.replace(/([A-Z])/g, " $1").toLowerCase()}
+            {` `}
+            {round.rightContent}
+            {round.correct ? <span> &#10003;</span> : <span> &#10007;</span>}
+          </Question>
+        ))}
+      </RecapList>
     </RecapContainer>
   );
 };

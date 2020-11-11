@@ -23,7 +23,7 @@ export const LargeSymbolCardsContainer = styled.div`
   flex-direction: column;
 `;
 
-export const InequalityContainer = styled.div`
+export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
