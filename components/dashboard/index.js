@@ -75,6 +75,7 @@ const Dashboard = () => {
   const rAssessment = choices[topic].assessment[engagement][level][assessment];
 
   const route = `${rTopic}/${rEngagement}/${rLevel}/${rAssessment}`;
+  const href = `/${rTopic}/${rEngagement}/[level]/[assessment]`;
 
   return (
     <>
@@ -88,7 +89,7 @@ const Dashboard = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {choices.map((choice, index) => (
+          {[...choices, {}].map((choice, index) => (
             <Tr key={topic + index}>
               <Td
                 index={index}
@@ -122,11 +123,8 @@ const Dashboard = () => {
           ))}
         </Tbody>
       </Table>
-      <div>
-        <div>
-          {topic}/{engagement}/{level}/{assessment}
-        </div>
-        <Link href={route.toLowerCase()}>
+      <div style={{ margin: "2rem 0 0 0" }}>
+        <Link href={href} as={route.toLowerCase()}>
           <A>{route}</A>
         </Link>
       </div>

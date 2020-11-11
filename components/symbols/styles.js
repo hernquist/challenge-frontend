@@ -18,13 +18,12 @@ export const LargeSymbolCard = styled.div`
   box-shadow: ${({ theme }) => theme.boxShadow.primaryCard};
 
   &:hover,
-  &:focus { 
+  &:focus {
     transition: 0.25s;
     color: ${({ theme }) => theme.color.atol};
     box-shadow: 0.2rem 0.2rem ${({ theme }) => theme.color.atol};
     background: ${({ theme }) => theme.color.lightBlue};
   }
-}
 `;
 
 export const LargeSymbolCardsContainer = styled.div`
