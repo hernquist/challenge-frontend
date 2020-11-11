@@ -13,6 +13,11 @@ import {
   PRACTICE_ONLY,
   EVERY,
   FIVE,
+  DECIMALS_VS_FRACTIONS,
+  TOPIC,
+  ENGAGEMENT,
+  LEVEL,
+  ASSESSMENT,
 } from "../../constant";
 import { Table, Tr, Th, Td, Thead, Tbody, A } from "./styles";
 
@@ -31,6 +36,12 @@ const choices = [
     engagement: [COMPARE, ORDER],
     level: [TWO, ONE],
     assessment: [[EVERY, EVERY], [EVERY]],
+  },
+  {
+    topic: DECIMALS_VS_FRACTIONS,
+    engagement: [COMPARE],
+    level: [TWO],
+    assessment: [[EVERY, EVERY]],
   },
   {
     topic: MIXED_NUMBERS,
@@ -82,14 +93,14 @@ const Dashboard = () => {
       <Table>
         <Thead>
           <Tr>
-            <Th>TOPIC</Th>
-            <Th>ENGAGEMENT</Th>
-            <Th>LEVEL</Th>
-            <Th>ASSESSMENT</Th>
+            <Th>{TOPIC}</Th>
+            <Th>{ENGAGEMENT}</Th>
+            <Th>{LEVEL}</Th>
+            <Th>{ASSESSMENT}</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {[...choices, {}].map((choice, index) => (
+          {choices.map((choice, index) => (
             <Tr key={topic + index}>
               <Td
                 index={index}

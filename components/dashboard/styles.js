@@ -9,6 +9,7 @@ export const Tr = styled.tr``;
 
 export const Th = styled.th`
   width: 25%;
+  text-transform: uppercase;
 `;
 
 export const Tbody = styled.tbody``;

@@ -37,15 +37,27 @@ const Inequalities = ({
     return content[index].list[getRandomInt(content[index].list.length)];
   };
 
+  const getTopic = (side) => {
+    const index =
+      (side === LEFT && !!order) || (side === RIGHT && !order) ? 0 : 1;
+    return content[index].type;
+  };
+
   const [leftContent, setLeftContent] = useState(getContent(LEFT));
   const [rightContent, setRightContent] = useState(getContent(RIGHT));
+  const [leftTopic, setLeftTopic] = useState(getTopic(LEFT));
+  const [rightTopic, setRightTopic] = useState(getTopic(RIGHT));
   const [gameHistory, updateGameHistory] = useState([]);
   const [numberOfAttempts, setNumberOfAttempts] = useState(0);
   const [numberOfCorrect, setNumberOfCorrect] = useState(0);
 
+  console.log(leftTopic, rightTopic);
+
   const setNewFractions = () => {
     setLeftContent(getContent(LEFT));
     setRightContent(getContent(RIGHT));
+    setLeftTopic(getTopic(LEFT));
+    setRightTopic(getTopic(RIGHT));
   };
 
   const reset = () => {
@@ -61,8 +73,7 @@ const Inequalities = ({
 
   useEffect(() => {
     if (leftContent === rightContent) {
-      setLeftContent(getContent(LEFT));
-      setRightContent(getContent(RIGHT));
+      setNewFractions();
     }
   });
 
@@ -86,8 +97,8 @@ const Inequalities = ({
   }, [roundOver]);
 
   const checkAnswer = (equality) => {
-    const firstNumber = getNumber(topic, leftContent);
-    const secondNumber = getNumber(topic, rightContent);
+    const firstNumber = getNumber(leftTopic, leftContent);
+    const secondNumber = getNumber(rightTopic, rightContent);
 
     const correct = determineInequality(equality, firstNumber, secondNumber);
     const round = {
@@ -127,7 +138,7 @@ const Inequalities = ({
     <ContentContainer>
       {loading && <h1>Loading...</h1>}
       <InequalityCards>
-        <LargeCard content={leftContent} topic={topic} />
+        <LargeCard content={leftContent} topic={leftTopic} />
         <LargeSymbolCardsContainer>
           <LargeSymbolCard
             onClick={() => checkAnswer("lessThan")}
@@ -139,7 +150,7 @@ const Inequalities = ({
             =
           </LargeSymbolCard>
         </LargeSymbolCardsContainer>
-        <LargeCard content={rightContent} topic={topic} />
+        <LargeCard content={rightContent} topic={rightTopic} />
       </InequalityCards>
     </ContentContainer>
   );
