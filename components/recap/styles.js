@@ -30,7 +30,7 @@ export const Question = styled.div`
   color: ${({ theme, correct }) =>
     correct ? theme.color.atol : theme.color.pomengranate};
   background: white;
-  padding: 0.4rem 1rem;
+  padding: 0.2rem 1rem;
   margin: 0 10%;
   border: 1px solid black;
 `;
@@ -54,9 +54,9 @@ export const RecapList = styled.div`
 
 export const ReviewATag = styled.a`
   font-size: 1.6rem;
-  max-width: 12rem;
   text-align: center;
   text-decoration: underline;
+  margin: 0 1rem;
 `;
 
 export const Title = styled.h1`
@@ -70,4 +70,17 @@ export const TitleContainer = styled.div`
   align-items: center;
   justify-content: content;
   margin: 0 0.5rem;
+`;
+
+export const BottomNav = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const Reset = styled.div`
+  font-size: 1.6rem;
+  max-width: 12rem;
+  text-align: center;
+  text-decoration: underline;
+  margin: 0 1rem;
 `;

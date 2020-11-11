@@ -25,10 +25,11 @@ const Inequalities = ({
   clearError,
   savePracticeHandler,
 }) => {
+  // state
   const [order, setOrder] = useState(getRandomInt(2));
   const content = get(module, "content");
   const numberOfTurns = get(module, "numberOfTurns", 5);
-  const { topic, engagement, level } = readRoute(route);
+  const { topic, engagement, level, assessment } = readRoute(route);
 
   const getContent = (side) => {
     const index =
@@ -39,15 +40,21 @@ const Inequalities = ({
   const [leftContent, setLeftContent] = useState(getContent(LEFT));
   const [rightContent, setRightContent] = useState(getContent(RIGHT));
   const [gameHistory, updateGameHistory] = useState([]);
+  const [numberOfAttempts, setNumberOfAttempts] = useState(0);
+  const [numberOfCorrect, setNumberOfCorrect] = useState(0);
 
   const setNewFractions = () => {
     setLeftContent(getContent(LEFT));
     setRightContent(getContent(RIGHT));
   };
 
-  const [numberOfAttempts, setNumberOfAttempts] = useState(0);
-  const [numberOfCorrect, setNumberOfCorrect] = useState(0);
+  const reset = () => {
+    setNumberOfAttempts(0);
+    setNumberOfCorrect(0);
+    updateGameHistory([]);
+  };
 
+  // updates
   useEffect(() => {
     setNewFractions();
   }, [numberOfAttempts]);
@@ -110,13 +117,12 @@ const Inequalities = ({
   }
 
   return roundOver ? (
-    <>
-      <Recap
-        gameHistory={gameHistory}
-        numberOfCorrect={numberOfCorrect}
-        numberOfAttempts={numberOfAttempts}
-      />
-    </>
+    <Recap
+      gameHistory={gameHistory}
+      numberOfCorrect={numberOfCorrect}
+      numberOfAttempts={numberOfAttempts}
+      reset={reset}
+    />
   ) : (
     <ContentContainer>
       {loading && <h1>Loading...</h1>}

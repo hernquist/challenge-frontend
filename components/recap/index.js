@@ -9,12 +9,19 @@ import {
   TitleContainer,
   Title,
   RecapList,
+  BottomNav,
+  Reset,
 } from "./styles";
 import { Numerator, Denominator } from "../cards/styles";
 import { getNumerator, getDenominator } from "../../lib/get-numerator";
 import styles from "../../styles/theme";
 
-const Recap = ({ numberOfCorrect, numberOfAttempts, gameHistory = [] }) => {
+const Recap = ({
+  numberOfCorrect,
+  numberOfAttempts,
+  gameHistory = [],
+  reset,
+}) => {
   const fraction = `${numberOfCorrect}/${numberOfAttempts}`;
   const decimalScore = numberOfCorrect / numberOfAttempts;
 
@@ -33,9 +40,6 @@ const Recap = ({ numberOfCorrect, numberOfAttempts, gameHistory = [] }) => {
     <RecapContainer>
       <TitleContainer>
         <Title>Your Score</Title>
-        <Link href="/">
-          <A>BACK TO DASHBOARD</A>
-        </Link>
       </TitleContainer>
       <Scores>
         <Score style={{ fontSize: "3rem" }}>
@@ -62,6 +66,12 @@ const Recap = ({ numberOfCorrect, numberOfAttempts, gameHistory = [] }) => {
           </Question>
         ))}
       </RecapList>
+      <BottomNav>
+        <Link href="/">
+          <A>BACK TO DASHBOARD</A>
+        </Link>
+        <Reset onClick={reset}>TRY AGAIN?</Reset>
+      </BottomNav>
     </RecapContainer>
   );
 };
