@@ -1,23 +1,32 @@
 export const CHALLENGE_TOKEN = "challenge-token";
 
+// topics
+export const TOPIC = "topic";
 export const FRACTIONS = "fractions";
 export const DECIMALS = "decimals";
-export const MIXED_NUMBERS = "mixed numbers";
+export const MIXED_NUMBERS = "mixed-numbers";
+export const DECIMALS_VS_FRACTIONS = "decimals-vs-fractions";
 
-export const COMPARE = "COMPARE";
-export const ORDER = "ORDER";
+// engagement
+export const ENGAGEMENT = "engagement";
+export const COMPARE = "compare";
+export const ORDER = "order";
 
+// level
+export const LEVEL = "level";
 export const ONE = [1];
 export const TWO = [1, 2];
 export const THREE = [1, 2, 3];
 export const FOUR = [1, 2, 3, 4];
 export const FIVE = [1, 2, 3, 4, 5];
 
-export const PRACTICE = "PRACTICE";
-export const ASSESS = "ASSESS";
+// assessment
+export const ASSESSMENT = "assessment";
+export const PRACTICE = "practice";
+export const ASSESS = "assess";
 
 export const PRACTICE_ONLY = [PRACTICE];
-export const EVERY = ["PRACTICE", "ASSESS"];
+export const EVERY = [PRACTICE, ASSESS];
 
 export const LEFT = "LEFT";
 export const RIGHT = "RIGHT";

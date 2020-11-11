@@ -3,11 +3,11 @@ import { create, all } from "mathjs";
 
 const math = create(all, {});
 
-export const getNumber = (topic, content) => {
-  if (topic === FRACTIONS) {
+export const getNumber = (contentTopic, content) => {
+  if (contentTopic === FRACTIONS) {
     return math.number(math.fraction(content));
   }
-  if (topic === DECIMALS) {
+  if (contentTopic === DECIMALS) {
     return Number(content);
   }
 };

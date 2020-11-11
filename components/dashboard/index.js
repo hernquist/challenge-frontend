@@ -13,6 +13,11 @@ import {
   PRACTICE_ONLY,
   EVERY,
   FIVE,
+  DECIMALS_VS_FRACTIONS,
+  TOPIC,
+  ENGAGEMENT,
+  LEVEL,
+  ASSESSMENT,
 } from "../../constant";
 import { Table, Tr, Th, Td, Thead, Tbody, A } from "./styles";
 
@@ -31,6 +36,12 @@ const choices = [
     engagement: [COMPARE, ORDER],
     level: [TWO, ONE],
     assessment: [[EVERY, EVERY], [EVERY]],
+  },
+  {
+    topic: DECIMALS_VS_FRACTIONS,
+    engagement: [COMPARE],
+    level: [TWO],
+    assessment: [[EVERY, EVERY]],
   },
   {
     topic: MIXED_NUMBERS,
@@ -75,16 +86,17 @@ const Dashboard = () => {
   const rAssessment = choices[topic].assessment[engagement][level][assessment];
 
   const route = `${rTopic}/${rEngagement}/${rLevel}/${rAssessment}`;
+  const href = `/${rTopic}/${rEngagement}/[level]/[assessment]`;
 
   return (
     <>
       <Table>
         <Thead>
           <Tr>
-            <Th>TOPIC</Th>
-            <Th>ENGAGEMENT</Th>
-            <Th>LEVEL</Th>
-            <Th>ASSESSMENT</Th>
+            <Th>{TOPIC}</Th>
+            <Th>{ENGAGEMENT}</Th>
+            <Th>{LEVEL}</Th>
+            <Th>{ASSESSMENT}</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -122,11 +134,8 @@ const Dashboard = () => {
           ))}
         </Tbody>
       </Table>
-      <div>
-        <div>
-          {topic}/{engagement}/{level}/{assessment}
-        </div>
-        <Link href={route.toLowerCase()}>
+      <div style={{ margin: "2rem 0 0 0" }}>
+        <Link href={href} as={route.toLowerCase()}>
           <A>{route}</A>
         </Link>
       </div>
