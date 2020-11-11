@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Container, Title, Links, A } from "./styles";
+import { Container, Title, Links, A, Email } from "./styles";
 import { CHALLENGE_TOKEN } from "../../constant";
 import { useStoreActions } from "easy-peasy";
 import get from "lodash/get";
@@ -37,7 +37,7 @@ const Header = ({ user, isAuthenticated }) => {
   return (
     <Container>
       <Title>CHALLENGE</Title>
-      {email && <div>{email}</div>}
+      {email && <Email>{email}</Email>}
       <IsLoggedIn isAuthenticated={isAuthenticated} />
     </Container>
   );

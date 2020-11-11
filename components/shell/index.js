@@ -23,7 +23,7 @@ const Shell = ({ children }) => {
   console.log("isAuthenticed", isAuthenticated);
 
   return (
-    <div style={{ height: "100vh" }}>
+    <div style={{ width: "100%" }}>
       <Head>
         <title>Challenge</title>
         <link rel="icon" href="/favicon.ico" />
