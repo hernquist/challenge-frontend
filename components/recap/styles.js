@@ -80,6 +80,7 @@ export const ReviewATag = styled.a`
 export const Title = styled.h1`
   font-size: 2rem;
   margin: 0 0.5rem;
+
   ${({ theme }) => theme.mediaQuery.tablet} {
     font-size: 5rem;
   }
