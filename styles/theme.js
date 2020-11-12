@@ -43,6 +43,7 @@ const styles = {
   },
   boxShadow: {
     primaryCard: "0.2rem 0.2rem #888888",
+    smallButton: "0.1rem 0.1rem #888888",
   },
 };
 

@@ -15,6 +15,7 @@ import {
 import { Numerator, Denominator } from "../cards/styles";
 import { getNumerator, getDenominator } from "../../lib/get-numerator";
 import styles from "../../styles/theme";
+import { isMobile } from "../../lib/is-mobile";
 
 const Recap = ({
   numberOfCorrect,
@@ -36,13 +37,23 @@ const Recap = ({
     },
   ];
 
+  const circleDimensions = isMobile()
+    ? {
+        height: 60,
+        width: 60,
+      }
+    : {
+        height: 100,
+        width: 100,
+      };
+
   return (
     <RecapContainer>
       <TitleContainer>
         <Title>Your Score</Title>
       </TitleContainer>
       <Scores>
-        <Score style={{ fontSize: "3rem" }}>
+        <Score>
           <Numerator style={{ padding: "0" }}>
             {getNumerator(fraction)}
           </Numerator>
@@ -52,7 +63,11 @@ const Recap = ({
         </Score>
         =<Score>{decimalScore.toFixed(2)}</Score>=
         <Score>{(decimalScore.toFixed(2) * 100).toFixed(0)}%</Score>
-        <Pie data={pieData} width="100" height="100" />
+        <Pie
+          data={pieData}
+          width={circleDimensions.width}
+          height={circleDimensions.height}
+        />
       </Scores>
       <RecapList>
         {gameHistory.map((round, i) => (

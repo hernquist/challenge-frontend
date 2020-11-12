@@ -1,5 +1,5 @@
 import Shell from "../components/shell";
-import Dashboard from "../components/new-dashboard";
+import Dashboard from "../components/dashboard";
 import dynamic from "next/dynamic";
 import get from "lodash/get";
 import { CHALLENGE_TOKEN } from "../constant";
@@ -8,6 +8,8 @@ import { useStoreActions } from "easy-peasy";
 import useQuery from "../request/useQuery";
 
 const LoginPage = dynamic(() => import("./login"));
+
+// old dashboard
 
 function Home(props) {
   const addUserHere = useStoreActions((actions) => actions.addUser);

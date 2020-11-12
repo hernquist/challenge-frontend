@@ -51,8 +51,6 @@ const Inequalities = ({
   const [numberOfAttempts, setNumberOfAttempts] = useState(0);
   const [numberOfCorrect, setNumberOfCorrect] = useState(0);
 
-  console.log(leftTopic, rightTopic);
-
   const setNewFractions = () => {
     setLeftContent(getContent(LEFT));
     setRightContent(getContent(RIGHT));
@@ -116,6 +114,10 @@ const Inequalities = ({
     setOrder(getRandomInt(2));
   };
 
+  const lessThan = () => checkAnswer("lessThan");
+  const greaterThan = () => checkAnswer("greaterThan");
+  const equalTo = () => checkAnswer("equalTo");
+
   if (!!error.message) {
     return (
       <Error
@@ -140,15 +142,9 @@ const Inequalities = ({
       <InequalityCards>
         <LargeCard content={leftContent} topic={leftTopic} />
         <LargeSymbolCardsContainer>
-          <LargeSymbolCard
-            onClick={() => checkAnswer("lessThan")}
-          >{`<`}</LargeSymbolCard>
-          <LargeSymbolCard
-            onClick={() => checkAnswer("greaterThan")}
-          >{`>`}</LargeSymbolCard>
-          <LargeSymbolCard onClick={() => checkAnswer("equalTo")}>
-            =
-          </LargeSymbolCard>
+          <LargeSymbolCard onClick={lessThan}>{`<`}</LargeSymbolCard>
+          <LargeSymbolCard onClick={greaterThan}>{`>`}</LargeSymbolCard>
+          <LargeSymbolCard onClick={equalTo}>=</LargeSymbolCard>
         </LargeSymbolCardsContainer>
         <LargeCard content={rightContent} topic={rightTopic} />
       </InequalityCards>
