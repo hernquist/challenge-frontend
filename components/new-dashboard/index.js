@@ -5,11 +5,8 @@ import {
   ORDER,
   DECIMALS,
   FRACTIONS,
-  MIXED_NUMBERS,
   ONE,
   TWO,
-  THREE,
-  FOUR,
   PRACTICE_ONLY,
   EVERY,
   FIVE,
@@ -17,7 +14,6 @@ import {
   TOPIC,
   ENGAGEMENT,
   LEVEL,
-  ASSESSMENT,
 } from "../../constant";
 import {
   DashboardContainer,
@@ -26,6 +22,8 @@ import {
   LinkWrapper,
   LevelButton,
   ButtonWrapper,
+  Label,
+  Wrapper,
 } from "./styles";
 import { useRouter } from "next/dist/client/router";
 
@@ -78,18 +76,9 @@ const Dashboard = () => {
     setAssessment(null);
   };
 
-  const handleAssessment = ({ target }) => {
-    const { value } = target;
-    setAssessment(value);
-  };
-
   const rTopic = choices[topic || 0].topic;
   const rEngagement = choices[topic || 0].engagement[engagement || 0];
   const rLevel = choices[topic || 0].level[engagement || 0][level || 0];
-  const rAssessment =
-    choices[topic || 0].assessment[engagement || 0][level || 0][
-      assessment || 0
-    ];
 
   const route = `${rTopic}/${rEngagement}/${rLevel}`;
   const href = `/${rTopic}/${rEngagement}/[level]/[assessment]`;
@@ -106,10 +95,10 @@ const Dashboard = () => {
 
   return (
     <DashboardContainer>
-      <>
-        <label>
+      <Wrapper>
+        <Label>
           {TOPIC} {topicName}
-        </label>
+        </Label>
         <ButtonWrapper>
           {choices.map((choice, index) => (
             <LevelButton
@@ -121,13 +110,13 @@ const Dashboard = () => {
             </LevelButton>
           ))}
         </ButtonWrapper>
-      </>
+      </Wrapper>
 
       {showEngagement && (
-        <>
-          <label>
+        <Wrapper>
+          <Label>
             {ENGAGEMENT} {engagementName}
-          </label>
+          </Label>
           <ButtonWrapper>
             {choices[topic || 0].engagement.map((engagementType, index) => (
               <LevelButton
@@ -139,14 +128,14 @@ const Dashboard = () => {
               </LevelButton>
             ))}
           </ButtonWrapper>
-        </>
+        </Wrapper>
       )}
 
       {showLevels && (
-        <>
-          <label>
+        <Wrapper>
+          <Label>
             {LEVEL} {level + 1}
-          </label>
+          </Label>
           <ButtonWrapper>
             {choices[topic || 0].level[engagement || 0].map(
               (levelType, index) => (
@@ -160,12 +149,12 @@ const Dashboard = () => {
               )
             )}
           </ButtonWrapper>
-        </>
+        </Wrapper>
       )}
 
       {showAssessments && (
-        <>
-          <label>Try as practice or assement?</label>
+        <Wrapper>
+          <Label>Try as practice or assessment?</Label>
           <ButtonsContainer>
             <LinkWrapper>
               <Link href={href} as={`${route.toLowerCase()}/practice`}>
@@ -178,7 +167,7 @@ const Dashboard = () => {
               </Link>
             </LinkWrapper>
           </ButtonsContainer>
-        </>
+        </Wrapper>
       )}
     </DashboardContainer>
   );
