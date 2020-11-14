@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { number, arrayOf, string, shape, bool, func, object } from "prop-types";
 import { determineInequality } from "../../lib/determine-inequality";
 import { getRandomInt } from "../../lib/get-random-int";
 import LargeCard from "../cards/large-card";
@@ -14,12 +13,13 @@ import Recap from "../recap";
 import Error from "../error";
 import { LEFT, RIGHT } from "../../constant";
 import get from "lodash/get";
-import { getNumber } from "./utils";
 import noop from "lodash/noop";
+import { getNumber } from "./utils";
+import { modulePropTypes } from "../../constant/proptypes";
 
 const Inequalities = ({
   module,
-  route,
+  asPath,
   error,
   loading,
   clearError,
@@ -29,7 +29,7 @@ const Inequalities = ({
   const [order, setOrder] = useState(getRandomInt(2));
   const content = get(module, "content");
   const numberOfTurns = get(module, "numberOfTurns", 5);
-  const { topic, engagement, level, assessment } = readRoute(route);
+  const { topic, engagement, level, assessment } = readRoute(asPath);
 
   const getContent = (side) => {
     const index =
@@ -152,25 +152,7 @@ const Inequalities = ({
   );
 };
 
-Inequalities.propTypes = {
-  module: shape({
-    numberOfTurns: number,
-    slug: string.isRequired,
-    content: arrayOf(
-      shape({
-        _id: string.isRequired,
-        name: string.isRequired,
-        type: string.isRequired,
-        list: arrayOf(string),
-      })
-    ),
-  }),
-  route: string.isRequired,
-  error: object,
-  loading: bool,
-  clearError: func,
-  savePracticeHandler: func,
-};
+Inequalities.propTypes = modulePropTypes;
 
 Inequalities.defaultProps = {
   clearError: noop,
