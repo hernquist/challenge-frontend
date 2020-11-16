@@ -70,16 +70,27 @@ const Recap = ({
         />
       </Scores>
       <RecapList>
-        {gameHistory.map((round, i) => (
-          <Question key={i} correct={round.correct}>
-            {round.leftContent}
-            {` `}is{` `}
-            {round.equality.replace(/([A-Z])/g, " $1").toLowerCase()}
-            {` `}
-            {round.rightContent}
-            {round.correct ? <span> &#10003;</span> : <span> &#10007;</span>}
-          </Question>
-        ))}
+        {gameHistory.map((round, i) =>
+          round.list ? (
+            <Question key={i} correct={round.correct}>
+              {round.list.map((item) => (
+                <span>
+                  {item.content}
+                  {` `}
+                </span>
+              ))}
+            </Question>
+          ) : (
+            <Question key={i} correct={round.correct}>
+              {round.leftContent}
+              {` `}is{` `}
+              {round.equality.replace(/([A-Z])/g, " $1").toLowerCase()}
+              {` `}
+              {round.rightContent}
+              {round.correct ? <span> &#10003;</span> : <span> &#10007;</span>}
+            </Question>
+          )
+        )}
       </RecapList>
       <BottomNav>
         <Link href="/">

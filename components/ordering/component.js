@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { modulePropTypes } from "../../constant/proptypes";
 import noop from "lodash/noop";
 import { readRoute } from "../../lib/read-route";
 import { OrderingCard } from "./styles";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import get from "lodash/get";
+import Recap from "../recap";
+import { checkOrder } from "../../lib/check-order";
 
 const Ordering = ({
   module,
@@ -14,24 +16,26 @@ const Ordering = ({
   clearError,
   savePracticeHandler,
 }) => {
+  const grid = 8;
   // state
   const content = get(module, "content");
-  const numberOfTurns = get(module, "numberOfTurns", 5);
+  const numberOfTurns = get(module, "numberOfTurns");
   const { topic, engagement, level, assessment } = readRoute(asPath);
-  console.log(topic, engagement, level, assessment);
-  console.log(content);
 
-  // fake data generator
-  const getItems = (count) => {
-    const list = get(content, "[0].list", []);
-    console.log("list", list);
+  console.log(topic, engagement, level, assessment);
+
+  const getItems = () => {
+    const list = get(content, `[${numberOfAttempts}].list`, []);
+    const count = list.length;
     return Array.from({ length: count }, (v, k) => k).map((k) => ({
       id: `item-${k}`,
       content: list[k],
     }));
   };
 
-  const grid = 8;
+  const [numberOfAttempts, setNumberOfAttempts] = useState(0);
+  const [roundOver, setRoundOver] = useState(false);
+  const [numberOfCorrect, setNumberOfCorrect] = useState(0);
 
   const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
@@ -41,7 +45,19 @@ const Ordering = ({
     return result;
   };
 
-  const [items, setItems] = useState(getItems(6));
+  const [items, setItems] = useState(getItems());
+  const [gameHistory, updateGameHistory] = useState([]);
+
+  useEffect(() => {
+    if (numberOfAttempts === 0) {
+      setRoundOver(false);
+    }
+    if (numberOfAttempts >= numberOfTurns) {
+      setRoundOver(true);
+    } else {
+      setItems(getItems());
+    }
+  }, [numberOfAttempts]);
 
   const getItemStyle = (isDragging, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
@@ -78,18 +94,68 @@ const Ordering = ({
     setItems(newItems);
   };
 
-  return (
+  const handleClick = () => {
+    const { isTrue } = items.reduce(checkOrder, { isTrue: true, prev: null });
+
+    const newNumberOfCorrect = numberOfCorrect + isTrue;
+    const newNumberOfAttempts = numberOfAttempts + 1;
+
+    const round = {
+      list: items,
+      correct: isTrue,
+      numberOfAttempts: newNumberOfAttempts,
+      numberOfCorrect: newNumberOfCorrect,
+    };
+
+    setNumberOfCorrect(newNumberOfCorrect);
+    setNumberOfAttempts(newNumberOfAttempts);
+    updateGameHistory([...gameHistory, round]);
+  };
+
+  const reset = () => {
+    setNumberOfAttempts(0);
+    setNumberOfCorrect(0);
+    updateGameHistory([]);
+  };
+
+  useEffect(() => {
+    if (roundOver) {
+      savePracticeHandler({
+        practice: {
+          completedOn: new Date(),
+          topic,
+          engagement,
+          level: Number(level),
+          totalQuestion: numberOfAttempts,
+          totalCorrect: numberOfCorrect,
+          score: numberOfCorrect / numberOfAttempts,
+          assessmentType: assessment,
+        },
+      });
+    }
+  }, [roundOver]);
+
+  if (!!error.message) {
+    return (
+      <Error
+        visible={true}
+        message={error.message}
+        buttonMessage="CONTINUE"
+        clearError={clearError}
+      />
+    );
+  }
+
+  return roundOver ? (
+    <Recap
+      gameHistory={gameHistory}
+      numberOfCorrect={numberOfCorrect}
+      numberOfAttempts={numberOfAttempts}
+      reset={reset}
+    />
+  ) : (
     <div>
-      {/* <div style={{ display: "flex", flexDirection: "row", margin: "1rem" }}>
-        {activeList.map((number) => (
-          <OrderingCard>{number}</OrderingCard>
-        ))}
-      </div>
-      <div style={{ display: "flex", flexDirection: "row", margin: "1rem" }}>
-        {emptyList.map((number) => (
-          <OrderingCard>{number}</OrderingCard>
-        ))}
-      </div> */}
+      {loading && <h1>Loading...</h1>}
 
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable" direction="horizontal">
@@ -122,7 +188,7 @@ const Ordering = ({
         </Droppable>
       </DragDropContext>
 
-      <div>CHECK</div>
+      <div onClick={handleClick}>CHECK</div>
     </div>
   );
 };

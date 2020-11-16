@@ -11,7 +11,7 @@ import {
 import { readRoute } from "../../lib/read-route";
 import Recap from "../recap";
 import Error from "../error";
-import { LEFT, RIGHT } from "../../constant";
+import { LEFT, RIGHT, EQUAL_TO, LESS_THAN, GREATER_THAN } from "../../constant";
 import get from "lodash/get";
 import noop from "lodash/noop";
 import { getNumber } from "./utils";
@@ -114,9 +114,9 @@ const Inequalities = ({
     setOrder(getRandomInt(2));
   };
 
-  const lessThan = () => checkAnswer("lessThan");
-  const greaterThan = () => checkAnswer("greaterThan");
-  const equalTo = () => checkAnswer("equalTo");
+  const lessThan = () => checkAnswer(LESS_THAN);
+  const greaterThan = () => checkAnswer(GREATER_THAN);
+  const equalTo = () => checkAnswer(EQUAL_TO);
 
   if (!!error.message) {
     return (
