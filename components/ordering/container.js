@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import Inequalities from "./component";
 import { useRouter } from "next/dist/client/router";
+import isEmpty from "lodash/isEmpty";
+import Ordering from "./component";
 import { SAVE_PRACTICE } from "../../gql/mutations";
 import handleMutation from "../../request/handleMutation";
 import handleQuery from "../../request/handleMutation";
 import { FETCH_MODULE } from "../../gql/queries";
 import { removeAssessmentFromRoute } from "../../lib/remove-assessment-from-route";
-import isEmpty from "lodash/isEmpty";
 import { readRoute } from "../../lib/read-route";
 
-const InequalitiesContainer = () => {
+const OrderingContainer = () => {
   const router = useRouter();
   const { asPath } = router;
   const [loading, setLoading] = useState(false);
@@ -44,7 +44,7 @@ const InequalitiesContainer = () => {
   if (isEmpty(moduleData)) return null;
 
   return (
-    <Inequalities
+    <Ordering
       asPath={asPath}
       loading={loading}
       error={error}
@@ -55,4 +55,4 @@ const InequalitiesContainer = () => {
   );
 };
 
-export default InequalitiesContainer;
+export default OrderingContainer;

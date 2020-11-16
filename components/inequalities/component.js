@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { number, arrayOf, string, shape, bool, func, object } from "prop-types";
 import { determineInequality } from "../../lib/determine-inequality";
 import { getRandomInt } from "../../lib/get-random-int";
 import LargeCard from "../cards/large-card";
@@ -12,14 +11,15 @@ import {
 import { readRoute } from "../../lib/read-route";
 import Recap from "../recap";
 import Error from "../error";
-import { LEFT, RIGHT } from "../../constant";
+import { LEFT, RIGHT, EQUAL_TO, LESS_THAN, GREATER_THAN } from "../../constant";
 import get from "lodash/get";
-import { getNumber } from "./utils";
 import noop from "lodash/noop";
+import { getNumber } from "./utils";
+import { modulePropTypes } from "../../constant/proptypes";
 
 const Inequalities = ({
   module,
-  route,
+  asPath,
   error,
   loading,
   clearError,
@@ -29,7 +29,7 @@ const Inequalities = ({
   const [order, setOrder] = useState(getRandomInt(2));
   const content = get(module, "content");
   const numberOfTurns = get(module, "numberOfTurns", 5);
-  const { topic, engagement, level, assessment } = readRoute(route);
+  const { topic, engagement, level, assessment } = readRoute(asPath);
 
   const getContent = (side) => {
     const index =
@@ -114,9 +114,9 @@ const Inequalities = ({
     setOrder(getRandomInt(2));
   };
 
-  const lessThan = () => checkAnswer("lessThan");
-  const greaterThan = () => checkAnswer("greaterThan");
-  const equalTo = () => checkAnswer("equalTo");
+  const lessThan = () => checkAnswer(LESS_THAN);
+  const greaterThan = () => checkAnswer(GREATER_THAN);
+  const equalTo = () => checkAnswer(EQUAL_TO);
 
   if (!!error.message) {
     return (
@@ -152,25 +152,7 @@ const Inequalities = ({
   );
 };
 
-Inequalities.propTypes = {
-  module: shape({
-    numberOfTurns: number,
-    slug: string.isRequired,
-    content: arrayOf(
-      shape({
-        _id: string.isRequired,
-        name: string.isRequired,
-        type: string.isRequired,
-        list: arrayOf(string),
-      })
-    ),
-  }),
-  route: string.isRequired,
-  error: object,
-  loading: bool,
-  clearError: func,
-  savePracticeHandler: func,
-};
+Inequalities.propTypes = modulePropTypes;
 
 Inequalities.defaultProps = {
   clearError: noop,

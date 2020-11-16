@@ -30,3 +30,7 @@ export const EVERY = [PRACTICE, ASSESS];
 
 export const LEFT = "LEFT";
 export const RIGHT = "RIGHT";
+
+export const GREATER_THAN = "greaterThan";
+export const LESS_THAN = "lessThan";
+export const EQUAL_TO = "equalTo";
