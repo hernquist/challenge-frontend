@@ -43,8 +43,6 @@ const OrderingContainer = () => {
 
   if (isEmpty(moduleData)) return null;
 
-  console.log("asPath", asPath);
-
   return (
     <Ordering
       asPath={asPath}

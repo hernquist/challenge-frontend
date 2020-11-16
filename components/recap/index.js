@@ -16,6 +16,7 @@ import { Numerator, Denominator } from "../cards/styles";
 import { getNumerator, getDenominator } from "../../lib/get-numerator";
 import styles from "../../styles/theme";
 import { isMobile } from "../../lib/is-mobile";
+import { GREATER_THAN } from "../../constant";
 
 const Recap = ({
   numberOfCorrect,
@@ -73,12 +74,18 @@ const Recap = ({
         {gameHistory.map((round, i) =>
           round.list ? (
             <Question key={i} correct={round.correct}>
+              {round.order === GREATER_THAN ? (
+                <span>{`\u2197`}</span>
+              ) : (
+                <span>{`\u2198`}</span>
+              )}
               {round.list.map((item) => (
                 <span>
                   {item.content}
                   {` `}
                 </span>
               ))}
+              {round.correct ? <span> &#10003;</span> : <span> &#10007;</span>}
             </Question>
           ) : (
             <Question key={i} correct={round.correct}>

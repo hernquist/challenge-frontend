@@ -6,7 +6,9 @@ import { OrderingCard } from "./styles";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import get from "lodash/get";
 import Recap from "../recap";
+import { GREATER_THAN, LESS_THAN } from "../../constant";
 import { checkOrder } from "../../lib/check-order";
+import { getRandomInt } from "../../lib/get-random-int";
 
 const Ordering = ({
   module,
@@ -17,25 +19,25 @@ const Ordering = ({
   savePracticeHandler,
 }) => {
   const grid = 8;
-  // state
+
   const content = get(module, "content");
   const numberOfTurns = get(module, "numberOfTurns");
   const { topic, engagement, level, assessment } = readRoute(asPath);
 
-  console.log(topic, engagement, level, assessment);
-
   const getItems = () => {
     const list = get(content, `[${numberOfAttempts}].list`, []);
     const count = list.length;
-    return Array.from({ length: count }, (v, k) => k).map((k) => ({
-      id: `item-${k}`,
-      content: list[k],
-    }));
+    return Array.from({ length: count }, (_, i) => i)
+      .map((i) => ({
+        id: `item-${i}`,
+        content: list[i],
+      }))
+      .map((a) => ({ sort: Math.random(), value: a }))
+      .sort((a, b) => a.sort - b.sort)
+      .map((a) => a.value);
   };
 
-  const [numberOfAttempts, setNumberOfAttempts] = useState(0);
-  const [roundOver, setRoundOver] = useState(false);
-  const [numberOfCorrect, setNumberOfCorrect] = useState(0);
+  const setRandomOrder = () => (getRandomInt(2) ? GREATER_THAN : LESS_THAN);
 
   const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
@@ -45,6 +47,11 @@ const Ordering = ({
     return result;
   };
 
+  // useState
+  const [numberOfAttempts, setNumberOfAttempts] = useState(0);
+  const [order, setOrder] = useState(setRandomOrder());
+  const [roundOver, setRoundOver] = useState(false);
+  const [numberOfCorrect, setNumberOfCorrect] = useState(0);
   const [items, setItems] = useState(getItems());
   const [gameHistory, updateGameHistory] = useState([]);
 
@@ -95,13 +102,17 @@ const Ordering = ({
   };
 
   const handleClick = () => {
-    const { isTrue } = items.reduce(checkOrder, { isTrue: true, prev: null });
+    const { isTrue } = items.reduce(checkOrder(order), {
+      isTrue: true,
+      prev: null,
+    });
 
     const newNumberOfCorrect = numberOfCorrect + isTrue;
     const newNumberOfAttempts = numberOfAttempts + 1;
 
     const round = {
       list: items,
+      order,
       correct: isTrue,
       numberOfAttempts: newNumberOfAttempts,
       numberOfCorrect: newNumberOfCorrect,
@@ -109,6 +120,7 @@ const Ordering = ({
 
     setNumberOfCorrect(newNumberOfCorrect);
     setNumberOfAttempts(newNumberOfAttempts);
+    setOrder(setRandomOrder());
     updateGameHistory([...gameHistory, round]);
   };
 
@@ -157,6 +169,11 @@ const Ordering = ({
     <div>
       {loading && <h1>Loading...</h1>}
 
+      <div>
+        {order === GREATER_THAN
+          ? "Make ascending \u2197"
+          : "Make decending \u2198"}
+      </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable" direction="horizontal">
           {(provided, snapshot) => (
