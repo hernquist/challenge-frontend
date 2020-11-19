@@ -8,7 +8,6 @@ export const Button = styled.button`
   padding: 0.4rem 0.8rem;
   border-radius: 0.4rem;
   font-size: 1.6rem;
-
   cursor: pointer;
   color: ${({ theme }) => theme.color.offBlack};
 
@@ -26,10 +25,10 @@ export const Button = styled.button`
   ${({ theme }) => theme.mediaQuery.tablet} {
     margin: 1rem;
     height: 6rem;
-    width: 12rem;
     border-radius: 1rem;
     border: 4px solid white;
-    font-size: 6rem;
+    padding: 0 1.2rem;
+    font-size: 2.4rem;
 
     &:hover {
       transition: 0.25s;
