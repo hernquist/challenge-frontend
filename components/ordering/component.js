@@ -18,7 +18,6 @@ import Recap from "../recap";
 import { GREATER_THAN, LESS_THAN } from "../../constant";
 import { checkOrder } from "../../lib/check-order";
 import { getRandomInt } from "../../lib/get-random-int";
-import { useTheme } from "styled-components";
 import { isMobile } from "../../lib/is-mobile";
 import { Numerator, Denominator } from "../cards/styles";
 import { getNumerator, getDenominator } from "../../lib/get-numerator";
@@ -31,13 +30,9 @@ const Ordering = ({
   clearError,
   savePracticeHandler,
 }) => {
-  const grid = 6;
-
   const content = get(module, "content");
   const numberOfTurns = get(module, "numberOfTurns");
   const { topic, engagement, level, assessment } = readRoute(asPath);
-
-  const theme = useTheme();
 
   const getItems = () => {
     const list = get(content, `[${numberOfAttempts}].list`, []);
@@ -82,7 +77,6 @@ const Ordering = ({
   }, [numberOfAttempts]);
 
   const onDragEnd = (result) => {
-    // dropped outside the list
     if (!result.destination) {
       return;
     }
