@@ -2,13 +2,25 @@ import { useState, useEffect } from "react";
 import { modulePropTypes } from "../../constant/proptypes";
 import noop from "lodash/noop";
 import { readRoute } from "../../lib/read-route";
-import { OrderingCard } from "./styles";
+import {
+  OrderingTitle,
+  OrderArrow,
+  Container,
+  MobileArrow,
+  DragWrapper,
+  Card,
+  List,
+} from "./styles";
+import { Button } from "../../styles/common";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import get from "lodash/get";
 import Recap from "../recap";
 import { GREATER_THAN, LESS_THAN } from "../../constant";
 import { checkOrder } from "../../lib/check-order";
 import { getRandomInt } from "../../lib/get-random-int";
+import { isMobile } from "../../lib/is-mobile";
+import { Numerator, Denominator } from "../cards/styles";
+import { getNumerator, getDenominator } from "../../lib/get-numerator";
 
 const Ordering = ({
   module,
@@ -18,8 +30,6 @@ const Ordering = ({
   clearError,
   savePracticeHandler,
 }) => {
-  const grid = 8;
-
   const content = get(module, "content");
   const numberOfTurns = get(module, "numberOfTurns");
   const { topic, engagement, level, assessment } = readRoute(asPath);
@@ -66,28 +76,7 @@ const Ordering = ({
     }
   }, [numberOfAttempts]);
 
-  const getItemStyle = (isDragging, draggableStyle) => ({
-    // some basic styles to make the items look a bit nicer
-    userSelect: "none",
-    padding: grid * 2,
-    margin: `0 ${grid}px 0 0`,
-
-    // change background colour if dragging
-    background: isDragging ? "lightgreen" : "grey",
-
-    // styles we need to apply on draggables
-    ...draggableStyle,
-  });
-
-  const getListStyle = (isDraggingOver) => ({
-    background: isDraggingOver ? "lightblue" : "lightgrey",
-    display: "flex",
-    padding: grid,
-    overflow: "auto",
-  });
-
   const onDragEnd = (result) => {
-    // dropped outside the list
     if (!result.destination) {
       return;
     }
@@ -158,6 +147,12 @@ const Ordering = ({
     );
   }
 
+  const direction = isMobile() ? "vertical" : "horizontal";
+  const orderTitle =
+    order === GREATER_THAN
+      ? "From least to greatest"
+      : "From greatest to least";
+
   return roundOver ? (
     <Recap
       gameHistory={gameHistory}
@@ -166,47 +161,59 @@ const Ordering = ({
       reset={reset}
     />
   ) : (
-    <div>
+    <Container>
       {loading && <h1>Loading...</h1>}
 
-      <div>
-        {order === GREATER_THAN
-          ? "Make ascending \u2197"
-          : "Make decending \u2198"}
-      </div>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="droppable" direction="horizontal">
-          {(provided, snapshot) => (
-            <div
-              ref={provided.innerRef}
-              style={getListStyle(snapshot.isDraggingOver)}
-              {...provided.droppableProps}
-            >
-              {items.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      style={getItemStyle(
-                        snapshot.isDragging,
-                        provided.draggableProps.style
-                      )}
+      <OrderingTitle>
+        {orderTitle}
+        <OrderArrow>{order === GREATER_THAN ? "\u2197" : "\u2198"}</OrderArrow>
+      </OrderingTitle>
+      <DragWrapper>
+        <MobileArrow>
+          {order === GREATER_THAN ? "\u2193" : "\u2191"}
+        </MobileArrow>
+        <div style={{ margin: "0 3rem" }}>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="droppable" direction={direction}>
+              {(provided, snapshot) => (
+                <List
+                  ref={provided.innerRef}
+                  isDraggingOver={snapshot.isDraggingOver}
+                  {...provided.droppableProps}
+                >
+                  {items.map((item, index) => (
+                    <Draggable
+                      key={item.id}
+                      draggableId={item.id}
+                      index={index}
                     >
-                      {item.content}
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-
-      <div onClick={handleClick}>CHECK</div>
-    </div>
+                      {(provided, snapshot) => (
+                        <Card
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          isDragging={snapshot.isDragging}
+                          style={{ ...provided.draggableProps.style }}
+                        >
+                          <Numerator style={{ padding: "0.1rem" }}>
+                            {getNumerator(item.content)}
+                          </Numerator>
+                          <Denominator style={{ padding: "0.1rem" }}>
+                            {getDenominator(item.content)}
+                          </Denominator>
+                        </Card>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </List>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </div>
+      </DragWrapper>
+      <Button onClick={handleClick}>ANSWER</Button>
+    </Container>
   );
 };
 

@@ -25,6 +25,7 @@ export const A = styled.a`
   font-size: 1.4rem;
   text-decoration: underline;
   cursor: pointer;
+  margin: 0 0 4rem;
 `;
 
 export const Label = styled.label`

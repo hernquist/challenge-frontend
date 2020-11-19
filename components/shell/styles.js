@@ -8,5 +8,5 @@ export const Body = styled.body`
   margin: 0;
   height: 100vh;
   background-color: ${({ theme }) => theme.color.iceberg};
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
 `;
