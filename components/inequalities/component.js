@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import { determineInequality } from "../../lib/determine-inequality";
 import { getRandomInt } from "../../lib/get-random-int";
 import LargeCard from "../cards/large-card";
@@ -11,11 +12,13 @@ import {
 import { readRoute } from "../../lib/read-route";
 import Recap from "../recap";
 import Error from "../error";
-import { LEFT, RIGHT, EQUAL_TO, LESS_THAN, GREATER_THAN } from "../../constant";
+import { LEFT, RIGHT, EQUAL_TO, LESS_THAN, GREATER_THAN, PRACTICE } from "../../constant";
 import get from "lodash/get";
 import noop from "lodash/noop";
 import { getNumber } from "./utils";
+import { renderMessage } from "../../lib/toastr-messaging";
 import { modulePropTypes } from "../../constant/proptypes";
+import ContentHeader from "../content-header";
 
 const Inequalities = ({
   module,
@@ -30,6 +33,7 @@ const Inequalities = ({
   const content = get(module, "content");
   const numberOfTurns = get(module, "numberOfTurns", 5);
   const { topic, engagement, level, assessment } = readRoute(asPath);
+  const inPracticeMode = assessment === PRACTICE;
 
   const getContent = (side) => {
     const index =
@@ -79,6 +83,7 @@ const Inequalities = ({
 
   useEffect(() => {
     if (roundOver) {
+      toast.dismiss();
       savePracticeHandler({
         practice: {
           completedOn: new Date(),
@@ -112,6 +117,10 @@ const Inequalities = ({
     setNumberOfAttempts(numberOfAttempts + 1);
     setNumberOfCorrect(numberOfCorrect + correct);
     setOrder(getRandomInt(2));
+
+    if (inPracticeMode) { 
+      renderMessage(correct, numberOfTurns, numberOfAttempts, numberOfCorrect);
+    }
   };
 
   const lessThan = () => checkAnswer(LESS_THAN);
@@ -139,6 +148,14 @@ const Inequalities = ({
   ) : (
     <ContentContainer>
       {loading && <h1>Loading...</h1>}
+      <ContentHeader 
+        asPath={asPath}
+        inPracticeMode={inPracticeMode}
+        numberOfTurns={numberOfTurns}
+        numberOfAttempts={numberOfAttempts}
+        numberOfCorrect={numberOfCorrect}
+      />
+
       <InequalityCards>
         <LargeCard content={leftContent} topic={leftTopic} />
         <LargeSymbolCardsContainer>
