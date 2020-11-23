@@ -1,21 +1,28 @@
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import { determineInequality } from "../../lib/determine-inequality";
 import { getRandomInt } from "../../lib/get-random-int";
 import LargeCard from "../cards/large-card";
 import {
-  ContentContainer,
   InequalityCards,
   LargeSymbolCardsContainer,
   LargeSymbolCard,
 } from "../symbols/styles";
 import { readRoute } from "../../lib/read-route";
-import Recap from "../recap";
-import Error from "../error";
-import { LEFT, RIGHT, EQUAL_TO, LESS_THAN, GREATER_THAN } from "../../constant";
+import {
+  LEFT,
+  RIGHT,
+  EQUAL_TO,
+  LESS_THAN,
+  GREATER_THAN,
+  PRACTICE,
+} from "../../constant";
 import get from "lodash/get";
 import noop from "lodash/noop";
 import { getNumber } from "./utils";
+import { renderMessage } from "../../lib/toastr-messaging";
 import { modulePropTypes } from "../../constant/proptypes";
+import ContentPageLayout from "../content-page-layout";
 
 const Inequalities = ({
   module,
@@ -30,6 +37,7 @@ const Inequalities = ({
   const content = get(module, "content");
   const numberOfTurns = get(module, "numberOfTurns", 5);
   const { topic, engagement, level, assessment } = readRoute(asPath);
+  const inPracticeMode = assessment === PRACTICE;
 
   const getContent = (side) => {
     const index =
@@ -79,6 +87,7 @@ const Inequalities = ({
 
   useEffect(() => {
     if (roundOver) {
+      toast.dismiss();
       savePracticeHandler({
         practice: {
           completedOn: new Date(),
@@ -112,33 +121,33 @@ const Inequalities = ({
     setNumberOfAttempts(numberOfAttempts + 1);
     setNumberOfCorrect(numberOfCorrect + correct);
     setOrder(getRandomInt(2));
+
+    if (inPracticeMode) {
+      renderMessage(correct, numberOfTurns, numberOfAttempts, numberOfCorrect);
+    }
   };
 
   const lessThan = () => checkAnswer(LESS_THAN);
   const greaterThan = () => checkAnswer(GREATER_THAN);
   const equalTo = () => checkAnswer(EQUAL_TO);
 
-  if (!!error.message) {
-    return (
-      <Error
-        visible={true}
-        message={error.message}
-        buttonMessage="CONTINUE"
-        clearError={clearError}
-      />
-    );
-  }
-
-  return roundOver ? (
-    <Recap
+  return (
+    <ContentPageLayout
+      loading={loading}
+      topic={topic}
+      asPath={asPath}
+      inPracticeMode={inPracticeMode}
+      numberOfAttempts={numberOfAttempts}
+      numberOfCorrect={numberOfCorrect}
+      numberOfTurns={numberOfTurns}
       gameHistory={gameHistory}
       numberOfCorrect={numberOfCorrect}
       numberOfAttempts={numberOfAttempts}
       reset={reset}
-    />
-  ) : (
-    <ContentContainer>
-      {loading && <h1>Loading...</h1>}
+      roundOver={roundOver}
+      errorMessage={error.message}
+      clearError={clearError}
+    >
       <InequalityCards>
         <LargeCard content={leftContent} topic={leftTopic} />
         <LargeSymbolCardsContainer>
@@ -148,7 +157,7 @@ const Inequalities = ({
         </LargeSymbolCardsContainer>
         <LargeCard content={rightContent} topic={rightTopic} />
       </InequalityCards>
-    </ContentContainer>
+    </ContentPageLayout>
   );
 };
 

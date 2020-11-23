@@ -54,12 +54,6 @@ export const LargeSymbolCardsContainer = styled.div`
   flex-direction: column;
 `;
 
-export const ContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
 export const InequalityCards = styled.div`
   font-size: 20rem;
   display: flex;
@@ -70,5 +64,10 @@ export const InequalityCards = styled.div`
 
   ${({ theme }) => theme.mediaQuery.tablet} {
     font-size: 40rem;
+  }
+
+  ${({ theme }) => theme.mediaQuery.desktop} {
+    width: none;
+    flex: 3;
   }
 `;

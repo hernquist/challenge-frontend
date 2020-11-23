@@ -21,6 +21,7 @@
     "react-beautiful-dnd": "^13.0.0",
     "react-chartjs": "^1.2.0",
     "react-dom": "16.13.1",
+    "react-toastify": "^6.1.0",
     "scroll-behavior-polyfill": "^2.0.13",
     "styled-components": "^5.1.1"
   },
