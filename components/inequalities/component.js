@@ -4,6 +4,8 @@ import { determineInequality } from "../../lib/determine-inequality";
 import { getRandomInt } from "../../lib/get-random-int";
 import LargeCard from "../cards/large-card";
 import {
+  DesktopTopic,
+  ContentPageWrapper,
   ContentContainer,
   InequalityCards,
   LargeSymbolCardsContainer,
@@ -12,7 +14,14 @@ import {
 import { readRoute } from "../../lib/read-route";
 import Recap from "../recap";
 import Error from "../error";
-import { LEFT, RIGHT, EQUAL_TO, LESS_THAN, GREATER_THAN, PRACTICE } from "../../constant";
+import {
+  LEFT,
+  RIGHT,
+  EQUAL_TO,
+  LESS_THAN,
+  GREATER_THAN,
+  PRACTICE,
+} from "../../constant";
 import get from "lodash/get";
 import noop from "lodash/noop";
 import { getNumber } from "./utils";
@@ -118,7 +127,7 @@ const Inequalities = ({
     setNumberOfCorrect(numberOfCorrect + correct);
     setOrder(getRandomInt(2));
 
-    if (inPracticeMode) { 
+    if (inPracticeMode) {
       renderMessage(correct, numberOfTurns, numberOfAttempts, numberOfCorrect);
     }
   };
@@ -146,26 +155,28 @@ const Inequalities = ({
       reset={reset}
     />
   ) : (
-    <ContentContainer>
-      {loading && <h1>Loading...</h1>}
-      <ContentHeader 
-        asPath={asPath}
-        inPracticeMode={inPracticeMode}
-        numberOfTurns={numberOfTurns}
-        numberOfAttempts={numberOfAttempts}
-        numberOfCorrect={numberOfCorrect}
-      />
-
-      <InequalityCards>
-        <LargeCard content={leftContent} topic={leftTopic} />
-        <LargeSymbolCardsContainer>
-          <LargeSymbolCard onClick={lessThan}>{`<`}</LargeSymbolCard>
-          <LargeSymbolCard onClick={greaterThan}>{`>`}</LargeSymbolCard>
-          <LargeSymbolCard onClick={equalTo}>=</LargeSymbolCard>
-        </LargeSymbolCardsContainer>
-        <LargeCard content={rightContent} topic={rightTopic} />
-      </InequalityCards>
-    </ContentContainer>
+    <ContentPageWrapper>
+      <DesktopTopic>{topic}</DesktopTopic>
+      <ContentContainer>
+        {loading && <h1>Loading...</h1>}
+        <ContentHeader
+          asPath={asPath}
+          inPracticeMode={inPracticeMode}
+          numberOfTurns={numberOfTurns}
+          numberOfAttempts={numberOfAttempts}
+          numberOfCorrect={numberOfCorrect}
+        />
+        <InequalityCards>
+          <LargeCard content={leftContent} topic={leftTopic} />
+          <LargeSymbolCardsContainer>
+            <LargeSymbolCard onClick={lessThan}>{`<`}</LargeSymbolCard>
+            <LargeSymbolCard onClick={greaterThan}>{`>`}</LargeSymbolCard>
+            <LargeSymbolCard onClick={equalTo}>=</LargeSymbolCard>
+          </LargeSymbolCardsContainer>
+          <LargeCard content={rightContent} topic={rightTopic} />
+        </InequalityCards>
+      </ContentContainer>
+    </ContentPageWrapper>
   );
 };
 

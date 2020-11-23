@@ -14,6 +14,11 @@ export const Container = styled.div`
   color: white;
   font-size: 1.2rem;
   text-transform: capitalize;
+
+  ${({ theme }) => theme.mediaQuery.desktop} {
+    margin: 0 2rem;
+    flex: 1;
+  }
 `;
 
 export const Question = styled.div`
@@ -26,4 +31,8 @@ export const Correct = styled.div`
 
 export const Topic = styled.h3`
   margin: 0;
+
+  ${({ theme }) => theme.mediaQuery.desktop} {
+    display: none;
+  }
 `;
