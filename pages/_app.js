@@ -1,13 +1,13 @@
 import "../styles.css";
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
 import { StoreProvider } from "easy-peasy";
 import store from "../store/store";
+import StyledToastContainer from "../styles/styled-toast-container";
 
 export default function MyApp({ Component, pageProps }) {
   return (
     <StoreProvider store={store}>
-      <ToastContainer />
+      <StyledToastContainer />
       <Component {...pageProps} />
     </StoreProvider>
   );
