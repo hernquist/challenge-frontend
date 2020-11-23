@@ -40,6 +40,11 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0 0 2rem;
+
+  ${({ theme }) => theme.mediaQuery.desktop} {
+    margin: 0;
+  }
 `;
 
 export const MobileArrow = styled.div`

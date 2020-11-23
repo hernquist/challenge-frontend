@@ -7,11 +7,12 @@ const ContentHeader = ({
   numberOfTurns,
   numberOfAttempts,
   numberOfCorrect,
+  desktopColumnStyle,
 }) => {
   const { topic, engagement, level } = readRoute(asPath);
 
   return (
-    <Container>
+    <Container desktopColumnStyle={desktopColumnStyle}>
       <Topic>{topic}</Topic>
       <div>{engagement}</div>
       <div>Level {level}</div>

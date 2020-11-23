@@ -4,16 +4,11 @@ import { determineInequality } from "../../lib/determine-inequality";
 import { getRandomInt } from "../../lib/get-random-int";
 import LargeCard from "../cards/large-card";
 import {
-  DesktopTopic,
-  ContentPageWrapper,
-  ContentContainer,
   InequalityCards,
   LargeSymbolCardsContainer,
   LargeSymbolCard,
 } from "../symbols/styles";
 import { readRoute } from "../../lib/read-route";
-import Recap from "../recap";
-import Error from "../error";
 import {
   LEFT,
   RIGHT,
@@ -27,7 +22,7 @@ import noop from "lodash/noop";
 import { getNumber } from "./utils";
 import { renderMessage } from "../../lib/toastr-messaging";
 import { modulePropTypes } from "../../constant/proptypes";
-import ContentHeader from "../content-header";
+import ContentPageLayout from "../content-page-layout";
 
 const Inequalities = ({
   module,
@@ -136,47 +131,33 @@ const Inequalities = ({
   const greaterThan = () => checkAnswer(GREATER_THAN);
   const equalTo = () => checkAnswer(EQUAL_TO);
 
-  if (!!error.message) {
-    return (
-      <Error
-        visible={true}
-        message={error.message}
-        buttonMessage="CONTINUE"
-        clearError={clearError}
-      />
-    );
-  }
-
-  return roundOver ? (
-    <Recap
+  return (
+    <ContentPageLayout
+      loading={loading}
+      topic={topic}
+      asPath={asPath}
+      inPracticeMode={inPracticeMode}
+      numberOfAttempts={numberOfAttempts}
+      numberOfCorrect={numberOfCorrect}
+      numberOfTurns={numberOfTurns}
       gameHistory={gameHistory}
       numberOfCorrect={numberOfCorrect}
       numberOfAttempts={numberOfAttempts}
       reset={reset}
-    />
-  ) : (
-    <ContentPageWrapper>
-      <DesktopTopic>{topic}</DesktopTopic>
-      <ContentContainer>
-        {loading && <h1>Loading...</h1>}
-        <ContentHeader
-          asPath={asPath}
-          inPracticeMode={inPracticeMode}
-          numberOfTurns={numberOfTurns}
-          numberOfAttempts={numberOfAttempts}
-          numberOfCorrect={numberOfCorrect}
-        />
-        <InequalityCards>
-          <LargeCard content={leftContent} topic={leftTopic} />
-          <LargeSymbolCardsContainer>
-            <LargeSymbolCard onClick={lessThan}>{`<`}</LargeSymbolCard>
-            <LargeSymbolCard onClick={greaterThan}>{`>`}</LargeSymbolCard>
-            <LargeSymbolCard onClick={equalTo}>=</LargeSymbolCard>
-          </LargeSymbolCardsContainer>
-          <LargeCard content={rightContent} topic={rightTopic} />
-        </InequalityCards>
-      </ContentContainer>
-    </ContentPageWrapper>
+      roundOver={roundOver}
+      errorMessage={error.message}
+      clearError={clearError}
+    >
+      <InequalityCards>
+        <LargeCard content={leftContent} topic={leftTopic} />
+        <LargeSymbolCardsContainer>
+          <LargeSymbolCard onClick={lessThan}>{`<`}</LargeSymbolCard>
+          <LargeSymbolCard onClick={greaterThan}>{`>`}</LargeSymbolCard>
+          <LargeSymbolCard onClick={equalTo}>=</LargeSymbolCard>
+        </LargeSymbolCardsContainer>
+        <LargeCard content={rightContent} topic={rightTopic} />
+      </InequalityCards>
+    </ContentPageLayout>
   );
 };
 

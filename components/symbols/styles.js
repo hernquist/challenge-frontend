@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Container } from "../content-header/styles";
 
 export const LargeSymbolCard = styled.button`
   margin: 0.6rem;
@@ -53,34 +52,6 @@ export const LargeSymbolCard = styled.button`
 export const LargeSymbolCardsContainer = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-export const ContentPageWrapper = styled.div`
-  ${({ theme }) => theme.mediaQuery.desktop} {
-    display: flex;
-    flex-direction: column;
-  }
-`;
-
-export const DesktopTopic = styled(Container)`
-  display: none;
-
-  ${({ theme }) => theme.mediaQuery.desktop} {
-    display: flex;
-    margin: 2rem;
-    font-size: 3rem;
-  }
-`;
-
-export const ContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  ${({ theme }) => theme.mediaQuery.desktop} {
-    flex-direction: row-reverse;
-    justify-content: space-between;
-  }
 `;
 
 export const InequalityCards = styled.div`

@@ -7,17 +7,18 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin: 2rem 0 1rem;
+  margin: 1.6rem 0 1rem;
   padding: 1.2rem 1.6rem;
   font-family: ${({ theme }) => theme.font.regular};
-
   color: white;
   font-size: 1.2rem;
   text-transform: capitalize;
 
   ${({ theme }) => theme.mediaQuery.desktop} {
-    margin: 0 2rem;
-    flex: 1;
+    margin: ${({ desktopColumnStyle }) =>
+      desktopColumnStyle ? `0 0 0.6rem` : `1.6rem 0 1rem`};
+    min-width: 14rem;
+    max-width: 16rem;
   }
 `;
 
