@@ -71,6 +71,7 @@ export const ReviewATag = styled.a`
   text-align: center;
   text-decoration: underline;
   margin: 0 1rem;
+  cursor: pointer;
 
   ${({ theme }) => theme.mediaQuery.tablet} {
     font-size: 1.6rem;
@@ -105,6 +106,7 @@ export const Reset = styled.div`
   text-align: center;
   text-decoration: underline;
   margin: 0 1rem;
+  cursor: pointer;
 
   ${({ theme }) => theme.mediaQuery.tablet} {
     font-size: 1.6rem;
