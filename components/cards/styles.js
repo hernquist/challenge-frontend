@@ -34,8 +34,12 @@ export const LargeCardContainer = styled.div`
 export const Numerator = styled.div`
   border-bottom: 4px solid ${({ theme }) => theme.color.offBlack};
   padding: 0.6rem;
+  display: flex;
+  justify-content: center;
 `;
 
 export const Denominator = styled.div`
   padding: 0.6rem;
+  display: flex;
+  justify-content: center;
 `;
