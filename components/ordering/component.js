@@ -19,10 +19,9 @@ import { GREATER_THAN, LESS_THAN, PRACTICE } from "../../constant";
 import { checkOrder } from "../../lib/check-order";
 import { getRandomInt } from "../../lib/get-random-int";
 import { isMobile } from "../../lib/is-mobile";
-import { Numerator, Denominator } from "../cards/styles";
-import { getNumerator, getDenominator } from "../../lib/get-numerator";
 import ContentPageLayout from "../content-page-layout";
 import { renderMessage } from "../../lib/toastr-messaging";
+import { CardType } from "./cardType";
 
 const Ordering = ({
   module,
@@ -201,12 +200,7 @@ const Ordering = ({
                             isDragging={snapshot.isDragging}
                             style={{ ...provided.draggableProps.style }}
                           >
-                            <Numerator style={{ padding: "0.1rem" }}>
-                              {getNumerator(item.content)}
-                            </Numerator>
-                            <Denominator style={{ padding: "0.1rem" }}>
-                              {getDenominator(item.content)}
-                            </Denominator>
+                            <CardType item={item} />
                           </Card>
                         )}
                       </Draggable>
