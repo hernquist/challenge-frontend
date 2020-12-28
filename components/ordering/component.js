@@ -11,6 +11,7 @@ import {
   DragWrapper,
   Card,
   List,
+  DragDropContextContainer,
 } from "./styles";
 import { Button } from "../../styles/common";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
@@ -19,10 +20,10 @@ import { GREATER_THAN, LESS_THAN, PRACTICE } from "../../constant";
 import { checkOrder } from "../../lib/check-order";
 import { getRandomInt } from "../../lib/get-random-int";
 import { isMobile } from "../../lib/is-mobile";
-import { Numerator, Denominator } from "../cards/styles";
-import { getNumerator, getDenominator } from "../../lib/get-numerator";
 import ContentPageLayout from "../content-page-layout";
 import { renderMessage } from "../../lib/toastr-messaging";
+import { CardType } from "./cardType";
+import { getNumberType } from "../../lib/get-number-type";
 
 const Ordering = ({
   module,
@@ -178,7 +179,7 @@ const Ordering = ({
           <MobileArrow>
             {order === GREATER_THAN ? "\u2193" : "\u2191"}
           </MobileArrow>
-          <div style={{ margin: "0 3rem" }}>
+          <DragDropContextContainer>
             <DragDropContext onDragEnd={onDragEnd}>
               <Droppable droppableId="droppable" direction={direction}>
                 {(provided, snapshot) => (
@@ -193,22 +194,28 @@ const Ordering = ({
                         draggableId={item.id}
                         index={index}
                       >
-                        {(provided, snapshot) => (
-                          <Card
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            isDragging={snapshot.isDragging}
-                            style={{ ...provided.draggableProps.style }}
-                          >
-                            <Numerator style={{ padding: "0.1rem" }}>
-                              {getNumerator(item.content)}
-                            </Numerator>
-                            <Denominator style={{ padding: "0.1rem" }}>
-                              {getDenominator(item.content)}
-                            </Denominator>
-                          </Card>
-                        )}
+                        {(provided, snapshot) => {
+                          const content = get(item, "content", "");
+                          const numberType = getNumberType(content);
+
+                          return (
+                            <Card
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              isDragging={snapshot.isDragging}
+                              style={{
+                                ...provided.draggableProps.style,
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                              }}
+                              numberType={numberType}
+                            >
+                              <CardType item={item} numberType={numberType} />
+                            </Card>
+                          );
+                        }}
                       </Draggable>
                     ))}
                     {provided.placeholder}
@@ -216,7 +223,7 @@ const Ordering = ({
                 )}
               </Droppable>
             </DragDropContext>
-          </div>
+          </DragDropContextContainer>
         </DragWrapper>
         <Button onClick={handleClick}>ANSWER</Button>
       </Container>

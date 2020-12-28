@@ -1,146 +1,131 @@
 import { useState } from "react";
 import Link from "next/link";
+import { TOPIC, ENGAGEMENT, LEVEL, choices } from "../../constant";
 import {
-  COMPARE,
-  ORDER,
-  DECIMALS,
-  FRACTIONS,
-  MIXED_NUMBERS,
-  ONE,
-  TWO,
-  THREE,
-  FOUR,
-  PRACTICE_ONLY,
-  EVERY,
-  FIVE,
-  DECIMALS_VS_FRACTIONS,
-  TOPIC,
-  ENGAGEMENT,
-  LEVEL,
-  ASSESSMENT,
-} from "../../constant";
-import { Table, Tr, Th, Td, Thead, Tbody, A } from "./styles";
-
-const choices = [
-  {
-    topic: FRACTIONS,
-    engagement: [COMPARE, ORDER],
-    level: [FIVE, TWO],
-    assessment: [
-      [EVERY, EVERY, EVERY, EVERY, EVERY],
-      [EVERY, PRACTICE_ONLY],
-    ],
-  },
-  {
-    topic: DECIMALS,
-    engagement: [COMPARE, ORDER],
-    level: [TWO, ONE],
-    assessment: [[EVERY, EVERY], [EVERY]],
-  },
-  {
-    topic: DECIMALS_VS_FRACTIONS,
-    engagement: [COMPARE],
-    level: [TWO],
-    assessment: [[EVERY, EVERY]],
-  },
-  // {
-  //   topic: MIXED_NUMBERS,
-  //   engagement: [COMPARE],
-  //   level: [THREE],
-  //   assessment: [[PRACTICE_ONLY, PRACTICE_ONLY, EVERY]],
-  // },
-  {},
-  {},
-];
+  DashboardContainer,
+  A,
+  ButtonsContainer,
+  LinkWrapper,
+  LevelButton,
+  ButtonWrapper,
+  Label,
+  Wrapper,
+} from "./styles";
 
 const Dashboard = () => {
-  const [topic, setTopic] = useState(0);
-  const [engagement, setEngagement] = useState(0);
-  const [level, setLevel] = useState(0);
-  const [assessment, setAssessment] = useState(0);
+  const [topic, setTopic] = useState(null);
+  const [engagement, setEngagement] = useState(null);
+  const [level, setLevel] = useState(null);
 
-  const handleTopic = (index) => {
-    setTopic(index);
-    setEngagement(0);
-    setLevel(0);
-    setAssessment(0);
+  const handleTopic = (value) => {
+    setTopic(value);
+    setEngagement(null);
+    setLevel(null);
   };
 
-  const handleEngagement = (index) => {
-    setEngagement(index);
-    setLevel(0);
-    setAssessment(0);
+  const handleEngagement = (value) => {
+    setEngagement(value);
+    setLevel(null);
   };
 
-  const handleLevel = (index) => {
-    setLevel(index);
-    setAssessment(0);
+  const handleLevel = (value) => {
+    setLevel(value);
   };
 
-  const handleAssessment = (index) => {
-    setAssessment(index);
-  };
+  const rTopic = choices[topic || 0].topic;
+  const rEngagement = choices[topic || 0].engagement[engagement || 0];
+  const rLevel = choices[topic || 0].level[engagement || 0][level || 0];
 
-  const rTopic = choices[topic].topic;
-  const rEngagement = choices[topic].engagement[engagement];
-  const rLevel = choices[topic].level[engagement][level];
-  const rAssessment = choices[topic].assessment[engagement][level][assessment];
-
-  const route = `${rTopic}/${rEngagement}/${rLevel}/${rAssessment}`;
+  const route = `${rTopic}/${rEngagement}/${rLevel}`;
   const href = `/${rTopic}/${rEngagement}/[level]/[assessment]`;
 
+  const topicName = topic === null ? "" : choices[topic].topic;
+  const engagementName =
+    topic === null || engagement === null
+      ? ""
+      : choices[topic].engagement[engagement];
+
+  const showEngagement = Boolean(topicName);
+  const showLevels = engagement !== null;
+  const showAssessments = engagement !== null && level !== null;
+
   return (
-    <>
-      <Table>
-        <Thead>
-          <Tr>
-            <Th>{TOPIC}</Th>
-            <Th>{ENGAGEMENT}</Th>
-            <Th>{LEVEL}</Th>
-            <Th>{ASSESSMENT}</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
+    <DashboardContainer>
+      <Wrapper>
+        <Label>
+          {TOPIC} {topicName}
+        </Label>
+        <ButtonWrapper>
           {choices.map((choice, index) => (
-            <Tr key={topic + index}>
-              <Td
-                index={index}
-                topic={topic}
-                onClick={() => handleTopic(index)}
-              >
-                {choice.topic}
-              </Td>
-              <Td
-                index={index}
-                engagement={engagement}
-                onClick={() => handleEngagement(index)}
-              >
-                {choices[topic].engagement[index]}{" "}
-              </Td>
-              <Td
-                index={index}
-                level={level}
-                onClick={() => handleLevel(index)}
-              >
-                {choices[topic].level[engagement][index]}
-              </Td>
-              <Td
-                index={index}
-                assessment={assessment}
-                onClick={() => handleAssessment(index)}
-              >
-                {choices[topic].assessment[engagement][level][index]}
-              </Td>
-            </Tr>
+            <LevelButton
+              key={`${choice.type}-${index}`}
+              onClick={() => handleTopic(index)}
+              active={index === topic}
+            >
+              {choice.topic}
+            </LevelButton>
           ))}
-        </Tbody>
-      </Table>
-      <div style={{ margin: "2rem 0 0 0" }}>
-        <Link href={href} as={route.toLowerCase()}>
-          <A>{route}</A>
-        </Link>
-      </div>
-    </>
+        </ButtonWrapper>
+      </Wrapper>
+
+      {showEngagement && (
+        <Wrapper>
+          <Label>
+            {ENGAGEMENT} {engagementName}
+          </Label>
+          <ButtonWrapper>
+            {choices[topic || 0].engagement.map((engagementType, index) => (
+              <LevelButton
+                key={`${engagementType}-${index}`}
+                onClick={() => handleEngagement(index)}
+                active={index === engagement}
+              >
+                {engagementType}
+              </LevelButton>
+            ))}
+          </ButtonWrapper>
+        </Wrapper>
+      )}
+
+      {showLevels && (
+        <Wrapper>
+          <Label>
+            {LEVEL} {level + 1}
+          </Label>
+          <ButtonWrapper>
+            {choices[topic || 0].level[engagement || 0].map(
+              (levelType, index) => (
+                <LevelButton
+                  key={`${levelType}-${index}`}
+                  onClick={() => handleLevel(index)}
+                  active={index === level}
+                >
+                  {levelType}
+                </LevelButton>
+              )
+            )}
+          </ButtonWrapper>
+        </Wrapper>
+      )}
+
+      {showAssessments && (
+        <Wrapper>
+          <Label>Try as practice or assessment?</Label>
+          <ButtonsContainer>
+            <LinkWrapper>
+              <Link href={href} as={`${route.toLowerCase()}/practice`}>
+                <A>Practice</A>
+              </Link>
+            </LinkWrapper>
+            <LinkWrapper>
+              <Link href={href} as={`${route.toLowerCase()}/assess`}>
+                <A>Assess</A>
+              </Link>
+            </LinkWrapper>
+          </ButtonsContainer>
+        </Wrapper>
+      )}
+    </DashboardContainer>
   );
 };
 

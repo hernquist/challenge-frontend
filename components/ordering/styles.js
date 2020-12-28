@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import { DECIMALS } from "../../constant";
+
+const grid = 6;
 
 export const OrderingCard = styled.div`
   height: 30px;
@@ -41,6 +44,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   margin: 0 0 2rem;
+  max-width: 100%;
 
   ${({ theme }) => theme.mediaQuery.desktop} {
     margin: 0;
@@ -67,14 +71,15 @@ export const DragWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin: 0 0 0.6rem;
+  max-width: 100%;
+  overflow-x: auto;
 `;
-
-const grid = 6;
 
 export const Card = styled.div`
   font-size: 1.6rem;
   user-select: "none";
-  padding: ${grid / 2}px ${grid * 4}px;
+  padding: ${({ numberType }) =>
+    numberType === DECIMALS ? `0px 6px` : `${grid / 2}px ${grid * 4}px`};
   margin: 0 0 ${grid}px 0;
   border-radius: 4px;
   border: 2px solid white;
@@ -88,7 +93,8 @@ export const Card = styled.div`
 
   ${({ theme }) => theme.mediaQuery.tablet} {
     margin: 0 ${2 * grid}px ${grid}px 0;
-    font-size: 3.2rem;
+    font-size: ${({ numberType }) =>
+      numberType === DECIMALS ? `2.4rem` : `3.2rem`};
 
     &:hover {
       transition: 0.25s;
@@ -103,7 +109,8 @@ export const Card = styled.div`
   }
 
   ${({ theme }) => theme.mediaQuery.desktop} {
-    font-size: 4rem;
+    font-size: ${({ numberType }) =>
+      numberType === DECIMALS ? `3.2rem` : `4rem`};
   }
 `;
 
@@ -113,12 +120,20 @@ export const List = styled.div`
   background: ${({ theme }) => theme.color.iceberg};
   font-family: ${({ theme }) => theme.font.regular};
   font-size: 1.6rem;
+  padding: ${grid / 2}px;
 
   ${({ isDraggingOver }) => isDraggingOver && `border: 1px solid black;`}
 
-  padding: ${grid / 2}px;
   ${({ theme }) => theme.mediaQuery.tablet} {
     flex-direction: row;
     padding: ${grid * 2}px;
+  }
+`;
+
+export const DragDropContextContainer = styled.div`
+  margin: 0 3rem;
+
+  ${({ theme }) => theme.mediaQuery.tablet} {
+    margin: 0;
   }
 `;
