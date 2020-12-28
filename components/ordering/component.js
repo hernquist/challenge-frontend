@@ -204,7 +204,12 @@ const Ordering = ({
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                               isDragging={snapshot.isDragging}
-                              style={{ ...provided.draggableProps.style }}
+                              style={{
+                                ...provided.draggableProps.style,
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                              }}
                               numberType={numberType}
                             >
                               <CardType item={item} numberType={numberType} />
