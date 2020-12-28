@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
-import { TOPIC, ENGAGEMENT, LEVEL, choices } from "../../constant";
+import { TOPIC, ENGAGEMENT, LEVEL, CHOICES } from "../../constant";
 import {
   DashboardContainer,
   A,
@@ -32,18 +32,18 @@ const Dashboard = () => {
     setLevel(value);
   };
 
-  const rTopic = choices[topic || 0].topic;
-  const rEngagement = choices[topic || 0].engagement[engagement || 0];
-  const rLevel = choices[topic || 0].level[engagement || 0][level || 0];
+  const rTopic = CHOICES[topic || 0].topic;
+  const rEngagement = CHOICES[topic || 0].engagement[engagement || 0];
+  const rLevel = CHOICES[topic || 0].level[engagement || 0][level || 0];
 
   const route = `${rTopic}/${rEngagement}/${rLevel}`;
   const href = `/${rTopic}/${rEngagement}/[level]/[assessment]`;
 
-  const topicName = topic === null ? "" : choices[topic].topic;
+  const topicName = topic === null ? "" : CHOICES[topic].topic;
   const engagementName =
     topic === null || engagement === null
       ? ""
-      : choices[topic].engagement[engagement];
+      : CHOICES[topic].engagement[engagement];
 
   const showEngagement = Boolean(topicName);
   const showLevels = engagement !== null;
@@ -56,7 +56,7 @@ const Dashboard = () => {
           {TOPIC} {topicName}
         </Label>
         <ButtonWrapper>
-          {choices.map((choice, index) => (
+          {CHOICES.map((choice, index) => (
             <LevelButton
               key={`${choice.type}-${index}`}
               onClick={() => handleTopic(index)}
@@ -74,7 +74,7 @@ const Dashboard = () => {
             {ENGAGEMENT} {engagementName}
           </Label>
           <ButtonWrapper>
-            {choices[topic || 0].engagement.map((engagementType, index) => (
+            {CHOICES[topic || 0].engagement.map((engagementType, index) => (
               <LevelButton
                 key={`${engagementType}-${index}`}
                 onClick={() => handleEngagement(index)}
@@ -93,7 +93,7 @@ const Dashboard = () => {
             {LEVEL} {level + 1}
           </Label>
           <ButtonWrapper>
-            {choices[topic || 0].level[engagement || 0].map(
+            {CHOICES[topic || 0].level[engagement || 0].map(
               (levelType, index) => (
                 <LevelButton
                   key={`${levelType}-${index}`}

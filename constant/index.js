@@ -36,7 +36,7 @@ export const LESS_THAN = "lessThan";
 export const EQUAL_TO = "equalTo";
 
 // content map
-export const choices = [
+export const CHOICES = [
   {
     topic: FRACTIONS,
     engagement: [COMPARE, ORDER],
@@ -58,10 +58,10 @@ export const choices = [
   {
     topic: DECIMALS_VS_FRACTIONS,
     engagement: [COMPARE, ORDER],
-    level: [TWO, TWO],
+    level: [TWO, THREE],
     assessment: [
       [EVERY, EVERY],
-      [EVERY, EVERY],
+      [EVERY, EVERY, EVERY],
     ],
   },
 ];
