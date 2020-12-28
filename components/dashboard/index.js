@@ -14,6 +14,7 @@ import {
   TOPIC,
   ENGAGEMENT,
   LEVEL,
+  ONE,
 } from "../../constant";
 import {
   DashboardContainer,
@@ -34,7 +35,7 @@ const choices = [
     level: [FIVE, TWO],
     assessment: [
       [EVERY, EVERY, EVERY, EVERY, EVERY],
-      [EVERY, PRACTICE_ONLY],
+      [EVERY, EVERY],
     ],
   },
   {
@@ -48,9 +49,9 @@ const choices = [
   },
   {
     topic: DECIMALS_VS_FRACTIONS,
-    engagement: [COMPARE],
-    level: [TWO],
-    assessment: [[EVERY, EVERY]],
+    engagement: [COMPARE, ORDER],
+    level: [TWO, ONE],
+    assessment: [[EVERY, EVERY], [EVERY]],
   },
 ];
 
