@@ -103,7 +103,7 @@ const Recap = ({
         <Link href="/">
           <A>BACK TO DASHBOARD</A>
         </Link>
-        <Reset onClick={reset}>TRY AGAIN?</Reset>
+        <Reset onClick={reset}>TRY AGAIN</Reset>
       </BottomNav>
     </RecapContainer>
   );
