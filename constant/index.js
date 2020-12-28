@@ -34,3 +34,34 @@ export const RIGHT = "RIGHT";
 export const GREATER_THAN = "greaterThan";
 export const LESS_THAN = "lessThan";
 export const EQUAL_TO = "equalTo";
+
+// content map
+export const choices = [
+  {
+    topic: FRACTIONS,
+    engagement: [COMPARE, ORDER],
+    level: [FIVE, TWO],
+    assessment: [
+      [EVERY, EVERY, EVERY, EVERY, EVERY],
+      [EVERY, EVERY],
+    ],
+  },
+  {
+    topic: DECIMALS,
+    engagement: [COMPARE, ORDER],
+    level: [TWO, THREE],
+    assessment: [
+      [EVERY, EVERY],
+      [EVERY, EVERY, EVERY],
+    ],
+  },
+  {
+    topic: DECIMALS_VS_FRACTIONS,
+    engagement: [COMPARE, ORDER],
+    level: [TWO, TWO],
+    assessment: [
+      [EVERY, EVERY],
+      [EVERY, EVERY],
+    ],
+  },
+];

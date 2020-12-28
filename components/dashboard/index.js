@@ -1,21 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
-import {
-  COMPARE,
-  ORDER,
-  DECIMALS,
-  FRACTIONS,
-  TWO,
-  THREE,
-  PRACTICE_ONLY,
-  EVERY,
-  FIVE,
-  DECIMALS_VS_FRACTIONS,
-  TOPIC,
-  ENGAGEMENT,
-  LEVEL,
-  ONE,
-} from "../../constant";
+import { TOPIC, ENGAGEMENT, LEVEL, choices } from "../../constant";
 import {
   DashboardContainer,
   A,
@@ -27,33 +12,6 @@ import {
   Wrapper,
 } from "./styles";
 import { useRouter } from "next/dist/client/router";
-
-const choices = [
-  {
-    topic: FRACTIONS,
-    engagement: [COMPARE, ORDER],
-    level: [FIVE, TWO],
-    assessment: [
-      [EVERY, EVERY, EVERY, EVERY, EVERY],
-      [EVERY, EVERY],
-    ],
-  },
-  {
-    topic: DECIMALS,
-    engagement: [COMPARE, ORDER],
-    level: [TWO, THREE],
-    assessment: [
-      [EVERY, EVERY],
-      [EVERY, EVERY, EVERY],
-    ],
-  },
-  {
-    topic: DECIMALS_VS_FRACTIONS,
-    engagement: [COMPARE, ORDER],
-    level: [TWO, ONE],
-    assessment: [[EVERY, EVERY], [EVERY]],
-  },
-];
 
 const Dashboard = () => {
   const router = useRouter();
