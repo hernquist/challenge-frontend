@@ -19,9 +19,7 @@ const Shell = ({ children }) => {
   handleScrollForIncompatibleBrowsers();
 
   const { user, isAuthenticated } = useStoreState((state) => state);
-  console.log("user", user);
-  console.log("isAuthenticed", isAuthenticated);
-
+  f;
   return (
     <>
       <Head>
