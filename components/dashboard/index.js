@@ -11,31 +11,25 @@ import {
   Label,
   Wrapper,
 } from "./styles";
-import { useRouter } from "next/dist/client/router";
 
 const Dashboard = () => {
-  const router = useRouter();
   const [topic, setTopic] = useState(null);
   const [engagement, setEngagement] = useState(null);
   const [level, setLevel] = useState(null);
-  const [assessment, setAssessment] = useState(null);
 
   const handleTopic = (value) => {
     setTopic(value);
     setEngagement(null);
     setLevel(null);
-    setAssessment(null);
   };
 
   const handleEngagement = (value) => {
     setEngagement(value);
     setLevel(null);
-    setAssessment(null);
   };
 
   const handleLevel = (value) => {
     setLevel(value);
-    setAssessment(null);
   };
 
   const rTopic = choices[topic || 0].topic;
