@@ -33,7 +33,6 @@ const styles = {
     keppel: "#4ABEB2",
     iceberg: "#A3CACE",
     lavender: "#7451E1",
-    denim: "#455ADF",
     dodgerBlue: "#455ADF",
     textOffWhite: "#f8f8f8",
     lightBlue: "#3299fa",
