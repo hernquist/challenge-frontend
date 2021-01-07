@@ -22,11 +22,10 @@ export const FIVE = [1, 2, 3, 4, 5];
 
 // assessment
 export const ASSESSMENT = "assessment";
+
 export const PRACTICE = "practice";
 export const ASSESS = "assess";
-
-export const PRACTICE_ONLY = [PRACTICE];
-export const EVERY = [PRACTICE, ASSESS];
+export const EVERY = "every";
 
 export const LEFT = "LEFT";
 export const RIGHT = "RIGHT";
@@ -34,34 +33,3 @@ export const RIGHT = "RIGHT";
 export const GREATER_THAN = "greaterThan";
 export const LESS_THAN = "lessThan";
 export const EQUAL_TO = "equalTo";
-
-// content map
-export const CHOICES = [
-  {
-    topic: FRACTIONS,
-    engagement: [COMPARE, ORDER],
-    level: [FIVE, TWO],
-    assessment: [
-      [EVERY, EVERY, EVERY, EVERY, EVERY],
-      [EVERY, EVERY],
-    ],
-  },
-  {
-    topic: DECIMALS,
-    engagement: [COMPARE, ORDER],
-    level: [TWO, THREE],
-    assessment: [
-      [EVERY, EVERY],
-      [EVERY, EVERY, EVERY],
-    ],
-  },
-  {
-    topic: DECIMALS_VS_FRACTIONS,
-    engagement: [COMPARE, ORDER],
-    level: [TWO, THREE],
-    assessment: [
-      [EVERY, EVERY],
-      [EVERY, EVERY, EVERY],
-    ],
-  },
-];

@@ -26,6 +26,7 @@ export const Title = styled.h2`
   color: ${({ theme }) => theme.color.atolText};
   font-size: 2rem;
   margin: 0 2rem;
+  cursor: pointer;
 `;
 
 export const Links = styled.div`

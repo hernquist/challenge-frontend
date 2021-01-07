@@ -25,4 +25,12 @@ const SAVE_PRACTICE = `
   }
 `;
 
-export { SIGNUP, LOGIN, SAVE_PRACTICE };
+const SET_UP_NEXT_MODULES = `
+mutation {
+  setUpNextModules {
+    upNextModules
+  } 
+}
+`;
+
+export { SIGNUP, LOGIN, SAVE_PRACTICE, SET_UP_NEXT_MODULES };

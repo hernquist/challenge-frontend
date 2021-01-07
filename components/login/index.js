@@ -21,7 +21,6 @@ const Login = () => {
 
   const [loading, setLoading] = useState(false);
   const [loginError, setError] = useState({});
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginMessage, setMessage] = useState("");

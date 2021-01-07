@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const DashboardContainer = styled.div`
+export const SelectYourOwnContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-content: center;
@@ -24,12 +24,12 @@ export const Label = styled.label`
   }
 `;
 
-export const DashboardButtonsContainer = styled.div`
+export const ButtonsContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   margin: 0.4rem auto 1rem;
-  max-width: 50rem;
+  max-width: 40rem;
 `;
 
 export const LinkWrapper = styled.div`

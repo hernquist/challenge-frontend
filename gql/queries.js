@@ -14,6 +14,7 @@ const USER = `query User {
         score
         assessmentType
       }
+      upNextModules
     }
   }
 `;
@@ -32,4 +33,16 @@ const FETCH_MODULE = `query GetModule ($slug: String!) {
   }
 `;
 
-export { USER, FETCH_MODULE };
+const FETCH_CONTENT_MAP = `
+  {
+    contentMap {
+      _id
+      topic
+      engagement
+      level
+      assessment
+    }
+  }
+`;
+
+export { USER, FETCH_MODULE, FETCH_CONTENT_MAP };

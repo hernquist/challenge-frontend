@@ -6,6 +6,7 @@ import get from "lodash/get";
 
 function IsLoggedIn({ isAuthenticated = false }) {
   const logout = useStoreActions((actions) => actions.logout);
+
   const handleLogout = () => {
     logout();
     if (typeof Storage !== "undefined") {
@@ -36,7 +37,9 @@ const Header = ({ user, isAuthenticated }) => {
 
   return (
     <Container>
-      <Title>CHALLENGE</Title>
+      <Link href="/">
+        <Title>CHALLENGE</Title>
+      </Link>
       {email && <Email>{email}</Email>}
       <IsLoggedIn isAuthenticated={isAuthenticated} />
     </Container>

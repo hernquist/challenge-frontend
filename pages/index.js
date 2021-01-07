@@ -34,8 +34,9 @@ Home.getInitialProps = async (ctx) => {
   try {
     const data = await useQuery(USER);
     const user = get(data, "data.user", {});
+    const isAuthenticated = !!user._id;
 
-    return { isAuthenticated: true, user };
+    return { isAuthenticated, user };
   } catch (e) {
     console.log("error from pages/index", e);
     return { isAuthenticated: false, user: null };
