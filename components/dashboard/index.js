@@ -5,8 +5,6 @@ import {
   A,
   DashboardButtonsContainer as ButtonsContainer,
   LinkWrapper,
-  // LevelButton,
-  // ButtonWrapper,
   Label,
   Wrapper,
 } from "./styles";

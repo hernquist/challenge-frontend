@@ -27,12 +27,12 @@ const Shell = ({ children }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <ThemeProvider>
-        <Body>
+      <body style={{ margin: "0" }}>
+        <ThemeProvider>
           <Header user={user} isAuthenticated={isAuthenticated} />
           <Main>{children}</Main>
-        </Body>
-      </ThemeProvider>
+        </ThemeProvider>
+      </body>
     </>
   );
 };

@@ -1,5 +1,5 @@
 import { action, thunk, createStore } from "easy-peasy";
-import { FETCH_CONTENT_MAP } from "../gql/queries";
+import { FETCH_CONTENT_MAP, USER } from "../gql/queries";
 import handleQuery from "../request/handleQuery";
 import handleMutation from "../request/handleMutation";
 import { SET_UP_NEXT_MODULES } from "../gql/mutations";
@@ -32,11 +32,18 @@ const actions = {
       upNextModules,
     },
   })),
+  fetchUser: thunk(async (actions) => {
+    handleQuery(USER, {})
+      .then(({ user }) => actions.addUser(user))
+      .catch((e) => {
+        console.error("error in action user: ", e);
+      });
+  }),
   addContentMap: thunk(async (actions) => {
     handleQuery(FETCH_CONTENT_MAP, {})
       .then(({ contentMap }) => actions.updateContentMap(contentMap))
       .catch((e) => {
-        console.log("error in action addContentMap: ", e);
+        console.error("error in action addContentMap: ", e);
       });
   }),
   setUpNextModules: thunk(async (actions) => {
@@ -45,7 +52,7 @@ const actions = {
         actions.updateUpNextModulesToUser(upNextModules)
       )
       .catch((e) => {
-        console.log("error in action setUpNextModules: ", e);
+        console.error("error in action setUpNextModules: ", e);
       });
   }),
 };

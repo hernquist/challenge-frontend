@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 export const Main = styled.main`
-  min-height: 100%;
-`;
-
-export const Body = styled.body`
-  margin: 0;
-  height: 100vh;
   background-color: ${({ theme }) => theme.color.iceberg};
-  /* overflow-y: hidden; */
+  min-height: calc(100vh - 6.2rem);
+  padding: 6.2rem 0 0 0;
+
+  ${({ theme }) => theme.mediaQuery.tablet} {
+    min-height: calc(100vh - 4rem);
+    padding: 4rem 0 0 0;
+  }
 `;

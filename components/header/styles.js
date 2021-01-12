@@ -11,6 +11,7 @@ export const Container = styled.header`
   font-family: ${({ theme }) => theme.font.regular};
   background-color: ${({ theme }) => theme.color.atol};
   padding: 0 0 0.2rem;
+  position: fixed;
 
   ${({ theme }) => theme.mediaQuery.tablet} {
     display: flex;

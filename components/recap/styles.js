@@ -97,7 +97,17 @@ export const TitleContainer = styled.div`
 
 export const BottomNav = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  font-size: 1.2rem;
+  align-items: center;
+
+  div {
+    margin: 0.1rem 0;
+  }
+
+  ${({ theme }) => theme.mediaQuery.tablet} {
+    flex-direction: row;
+  }
 `;
 
 export const Reset = styled.div`

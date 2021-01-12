@@ -12,34 +12,44 @@ export const Label = styled.label`
   flex-direction: row;
   justify-content: center;
   font-family: ${({ theme }) => theme.font.regular};
-  margin: 0.6rem auto;
+  margin: 0.6rem auto 0;
   padding: 0.1rem 0.3rem;
-  font-size: 1rem;
+  font-size: 1.6rem;
   text-transform: capitalize;
   border-radius: 0.1rem;
 
   ${({ theme }) => theme.mediaQuery.tablet} {
     font-size: 1.6rem;
     border-bottom: 1px solid black;
+    margin: 0.6rem auto;
   }
 `;
 
 export const DashboardButtonsContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
   margin: 0.4rem auto 1rem;
   max-width: 50rem;
+
+  ${({ theme }) => theme.mediaQuery.tablet} {
+    flex-direction: row;
+  }
 `;
 
 export const LinkWrapper = styled.div`
   border: 2px double black;
   padding: 0.4rem 1rem;
   border-radius: 1rem;
-  margin: 0 1rem;
+  margin: 0.6rem 0;
   background: ${({ theme }) => theme.color.mustard};
   box-shadow: ${({ theme }) => theme.boxShadow.smallButton};
+  text-align: center;
   cursor: pointer;
+
+  ${({ theme }) => theme.mediaQuery.tablet} {
+    margin: 0 1rem;
+  }
 `;
 
 export const A = styled.a`

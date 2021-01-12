@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Pie } from "react-chartjs";
+import { useRouter } from "next/router";
+import { get } from "lodash";
 import {
   RecapContainer,
   Scores,
@@ -17,6 +19,7 @@ import { getNumerator, getDenominator } from "../../lib/get-numerator";
 import styles from "../../styles/theme";
 import { isMobile } from "../../lib/is-mobile";
 import { GREATER_THAN } from "../../constant";
+import { number, array, func } from "prop-types";
 
 const Recap = ({
   numberOfCorrect,
@@ -24,8 +27,25 @@ const Recap = ({
   gameHistory = [],
   reset,
 }) => {
+  const router = useRouter();
   const fraction = `${numberOfCorrect}/${numberOfAttempts}`;
   const decimalScore = numberOfCorrect / numberOfAttempts;
+
+  const getAsForRecap = (path) => {
+    const isPractice = path.includes("practice");
+    const piecesOfPath = path
+      .split("/")
+      .filter((piece) => piece)
+      .map((piece) => (piece === "practice" ? "assess" : piece))
+      .join("/");
+
+    return [`/${piecesOfPath}`, isPractice];
+  };
+
+  const href = get(router, "route", "");
+  const asPath = get(router, "asPath", "");
+
+  const [as, isPractice] = getAsForRecap(asPath);
 
   const pieData = [
     {
@@ -100,13 +120,35 @@ const Recap = ({
         )}
       </RecapList>
       <BottomNav>
-        <Link href="/">
-          <A>BACK TO DASHBOARD</A>
-        </Link>
-        <Reset onClick={reset}>TRY AGAIN</Reset>
+        <div>
+          <Link href="/">
+            <A>BACK TO DASHBOARD</A>
+          </Link>
+        </div>
+        <div>
+          <Reset onClick={reset}>TRY AGAIN</Reset>
+        </div>
+        {isPractice && (
+          <div>
+            <Link href={href} as={as}>
+              <A onClick={reset}>TAKE ASSESSMENT</A>
+            </Link>
+          </div>
+        )}
       </BottomNav>
     </RecapContainer>
   );
+};
+
+Recap.propTypes = {
+  numberOfCorrect: number.isRequired,
+  numberOfAttempts: number.isRequired,
+  gameHistory: array,
+  reset: func.isRequired,
+};
+
+Recap.defaultProps = {
+  gameHistory: [],
 };
 
 export default Recap;
